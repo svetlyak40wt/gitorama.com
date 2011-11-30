@@ -1,12 +1,44 @@
 <!doctype html>
-<html>
+<html lang="en">
     <head>
+        <meta charset="utf-8">
         <title>Gitorama</title>
+        <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
+        <style type="text/css">
+            body {
+                padding-top: 20px;
+            }
+        </style>
     </head>
     <body>
-        <h1>Gitorama!</h1>
-        {% block content %}
-        {% endblock %}
+        <div class="topbar">
+          <div class="fill">
+            <div class="container">
+              <a class="brand" href="#">Gitorama!</a>
+              <ul class="nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+              </ul>
+
+            {% if request.user %}
+                <form action="{{ url_for('logout') }}" method="POST" class="pull-right">
+                    <p style="color: gray">Hello, {{ request.user }}. <input type="submit" value="Sign Out" class="btn danger"/></p>
+                </form>
+            {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+            <h1></h1>
+            {% block content %}
+            {% endblock %}
+
+            <footer>
+                <p>&copy; Alexander Artemenko 2011</p>
+            </footer>
+        </div>
     </body>
 </html>
 
