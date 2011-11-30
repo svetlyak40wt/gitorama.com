@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if not request.user %}
+        Please, sign in, using your GitHub account.
+        <form action="{{ url_for('login') }}" method="POST">
+            <input type="submit" value="Sign In"/>
+        </form>
+    {% else %}
+        Hello, {{ request.user }}.
+        <form action="{{ url_for('logout') }}" method="POST">
+            <input type="submit" value="Sign Out"/>
+        </form>
+    {% endif %}
+{% endblock %}
