@@ -22,7 +22,7 @@
               </ul>
 
             {% if request.user %}
-                <form action="{{ url_for('logout') }}" method="POST" class="pull-right">
+                <form action="{{ url_for('auth.logout') }}" method="POST" class="pull-right">
                     <p style="color: gray">Hello, {{ request.user }}. <input type="submit" value="Sign Out" class="btn danger"/></p>
                 </form>
             {% endif %}

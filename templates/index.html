@@ -3,7 +3,7 @@
 {% block content %}
     {% if not request.user %}
         <h2>Please, sign in, using your GitHub account.</h2>
-        <form action="{{ url_for('login') }}" method="POST">
+        <form action="{{ url_for('auth.login') }}" method="POST">
             <input type="submit" value="Sign In Using GitHub!" class="btn primary"/>
         </form>
     {% endif %}
