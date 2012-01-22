@@ -4,8 +4,9 @@ import requests
 
 from flask import (
     Blueprint,
-    render_template, request,
+    request,
     url_for, redirect, session,
+    current_app,
 )
 
 
@@ -15,12 +16,6 @@ OAUTH_CLIENT_ID = '7cf20f0f8b99553252ee'
 OAUTH_SECRET = '3331f02c56725f4981c2948f23a762e22229753c'
 
 auth = Blueprint('auth', __name__)
-
-
-@auth.route("/")
-def index():
-    request.user = session.get('token')
-    return render_template('index.html')
 
 
 @auth.route('/login', methods=['POST'])
@@ -33,12 +28,12 @@ def login():
 
 @auth.route('/logout', methods=['POST'])
 def logout():
-    response = redirect(url_for('auth.index'))
+    response = redirect(url_for('core.index'))
     session.pop('token', None)
     return response
 
 
-@auth.route('/auth/callback', methods=['GET'])
+@auth.route('/callback', methods=['GET'])
 def auth_callback():
     code = request.args.get('code', '')
     data = requests.post(
@@ -53,11 +48,11 @@ def auth_callback():
     result = dict(
         urlparse.parse_qsl(data.content)
     )
-    auth.logger.debug(result)
+    current_app.logger.debug(result)
 
     token = result.get('access_token')
 
-    response = redirect(url_for('auth.index'))
+    response = redirect(url_for('core.index'))
     if token is not None:
         session['token'] = token
 
