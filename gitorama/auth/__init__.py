@@ -10,18 +10,13 @@ from flask import (
 )
 
 
-OAUTH_AUTHORIZE_URL = 'https://github.com/login/oauth/authorize'
-OAUTH_ACCESS_TOKEN_URL = 'https://github.com/login/oauth/access_token'
-OAUTH_CLIENT_ID = '7cf20f0f8b99553252ee'
-OAUTH_SECRET = '3331f02c56725f4981c2948f23a762e22229753c'
-
 auth = Blueprint('auth', __name__)
 
 
 @auth.route('/login', methods=['POST'])
 def login():
-    url = OAUTH_AUTHORIZE_URL + '?' + urllib.urlencode(dict(
-        client_id=OAUTH_CLIENT_ID,
+    url = current_app.config['OAUTH_AUTHORIZE_URL'] + '?' + urllib.urlencode(dict(
+        client_id=current_app.config['OAUTH_CLIENT_ID'],
     ))
     return redirect(url)
 
@@ -37,10 +32,10 @@ def logout():
 def auth_callback():
     code = request.args.get('code', '')
     data = requests.post(
-        OAUTH_ACCESS_TOKEN_URL,
+        current_app.config['OAUTH_ACCESS_TOKEN_URL'],
         urllib.urlencode(dict(
-            client_id=OAUTH_CLIENT_ID,
-            client_secret=OAUTH_SECRET,
+            client_id=current_app.config['OAUTH_CLIENT_ID'],
+            client_secret=current_app.config['OAUTH_SECRET'],
             code=code,
         )),
         timeout=30,
