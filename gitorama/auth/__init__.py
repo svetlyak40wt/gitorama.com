@@ -10,10 +10,10 @@ from flask import (
 )
 
 
-auth = Blueprint('auth', __name__)
+bp = Blueprint('auth', __name__)
 
 
-@auth.route('/login', methods=['POST'])
+@bp.route('/login', methods=['POST'])
 def login():
     url = current_app.config['OAUTH_AUTHORIZE_URL'] + '?' + urllib.urlencode(dict(
         client_id=current_app.config['OAUTH_CLIENT_ID'],
@@ -21,14 +21,14 @@ def login():
     return redirect(url)
 
 
-@auth.route('/logout', methods=['POST'])
+@bp.route('/logout', methods=['POST'])
 def logout():
     response = redirect(url_for('core.index'))
     session.pop('token', None)
     return response
 
 
-@auth.route('/callback', methods=['GET'])
+@bp.route('/callback', methods=['GET'])
 def auth_callback():
     code = request.args.get('code', '')
     data = requests.post(

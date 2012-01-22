@@ -1,14 +1,14 @@
 from flask import Flask
-from gitorama.auth import auth
-from gitorama.core import core
+from gitorama import auth
+from gitorama import core
 
 SECRET_KEY = 'K\xba\x8a\xe6&\xc9,\xa1\x0c\xe0\x97\xca\xb9\x9b\xd32\xe7\xbb\x1b\x1a\x91)QR'
 
 app = Flask(__name__)
 app.config.from_object('gitorama.settings.development')
 
-app.register_blueprint(core)
-app.register_blueprint(auth, url_prefix='/auth')
+app.register_blueprint(core.bp)
+app.register_blueprint(auth.bp, url_prefix='/auth')
 app.secret_key = SECRET_KEY
 
 if __name__ == "__main__":
