@@ -23,7 +23,7 @@
 
             {% if request.user %}
                 <form action="{{ url_for('auth.logout') }}" method="POST" class="pull-right">
-                    <p style="color: gray">Hello, {{ request.user.name }}. <input type="submit" value="Sign Out" class="btn danger"/></p>
+                    <p style="color: gray"><img src="{{ request.user.avatar_url }}" width="20px" height="20px"/>{{ request.user.login }} <input type="submit" value="Log Out" class="btn danger"/></p>
                 </form>
             {% endif %}
             </div>
