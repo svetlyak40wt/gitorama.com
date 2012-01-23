@@ -12,7 +12,7 @@ def create_env():
     with cd(env.project_dir):
         if not dir_exists('env'):
             run('virtualenv env')
-        run('env/bin/pip install -r requirements.txt')
+        run('env/bin/pip install -r requirements/%s.txt' % env.environment)
 
 
 def ensure_apt_source(source_line):
@@ -32,6 +32,7 @@ def ensure_mongo():
 
 def setup():
     create_env()
+    make_symlinks()
     ensure_mongo()
 
 

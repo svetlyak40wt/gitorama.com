@@ -10,7 +10,9 @@ from flask import (
     session, g, current_app
 )
 
+
 bp = Blueprint('core', __name__)
+
 
 @bp.route("/")
 def index():
@@ -19,8 +21,7 @@ def index():
 
 @bp.before_request
 def before_request():
-    conn = pymongo.Connection('localhost', 27017)
-    g.db = conn.gitorama
+    g.db = get_db()
 
     token = session.get('token')
     if token is not None:
@@ -51,4 +52,10 @@ def before_request():
 def teardown_request(exception):
     if hasattr(g, 'db'):
         g.db.connection.close()
+
+
+def get_db():
+    conn = pymongo.Connection('localhost', 27017)
+    return conn.gitorama
+
 
