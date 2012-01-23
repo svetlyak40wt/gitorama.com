@@ -5,6 +5,15 @@ def dev():
     env.hosts = ['vbox']
     env.environment = 'development'
     env.project_dir = '/vagrant/gitorama.com'
+    env.repository = 'git:git-private/gitorama.com.git'
+    use_ssh_config(env)
+
+
+def production():
+    env.hosts = ['amazon']
+    env.environment = 'production'
+    env.project_dir = '/home/ubuntu/projects/gitorama.com'
+    env.repository = '~/git-private/gitorama.com.git'
     use_ssh_config(env)
 
 
@@ -31,6 +40,15 @@ def ensure_mongo():
 
 
 def setup():
+    if env.environment == 'production':
+        base_dir, relative_project_dir = os.path.split(env.project_dir)
+        with cd(base_dir):
+            if dir_exists(relative_project_dir):
+                with cd(relative_project_dir):
+                    run('git pull')
+            else:
+                run('git clone %s %s' % (env.repository, relative_project_dir))
+
     create_env()
     make_symlinks()
     ensure_mongo()
