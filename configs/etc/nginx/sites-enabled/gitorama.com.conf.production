@@ -1,0 +1,26 @@
+upstream gitorama_server {
+    server 127.0.0.1:40000 fail_timeout=0;
+}
+
+server {
+    listen 80;
+    server_name gitorama.com;
+    access_log /home/ubuntu/log/nginx/dev.gitorama.com.log;
+
+    # path for static files
+    root /home/ubuntu/projects/gitorama.com;
+
+    location / {
+        # checks for static file, if not found proxy to app
+        try_files $uri @proxy_to_app;
+    }
+
+    location @proxy_to_app {
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+
+        proxy_pass   http://gitorama_server;
+    }
+}
+

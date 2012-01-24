@@ -1,0 +1,4 @@
+[program:gitorama]
+user = ubuntu
+command = /home/ubuntu/projects/gitorama.com/env/bin/gunicorn -b 127.0.0.1:40000 gitorama:app
+autorestart = true

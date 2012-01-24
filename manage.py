@@ -3,15 +3,14 @@ import datetime
 
 from flask import g
 from flaskext.script import Manager
-from app import app
-from gitorama import core
+from gitorama import core, app
 
 
 manager = Manager(app)
 
 
 @manager.command
-def dumpconfig():
+def dump_config():
     """Dumps config"""
 
     print u'\n'.join(
