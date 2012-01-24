@@ -1,0 +1,5 @@
+MAILTO=svetlyak.40wt@gmail.com
+
+# update stats every hour
+0 * * * * ubuntu (cd /home/ubuntu/projects/gitorama.com && ./manage.py update_users)
+
