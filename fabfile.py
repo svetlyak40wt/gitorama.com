@@ -50,6 +50,13 @@ def deploy():
             else:
                 run('git clone %s %s' % (env.repository, relative_project_dir))
 
+            with mode_sudo():
+                file_attribs(
+                    os.path.join(relative_project_dir, 'configs/etc/cron.d/gitorama-com.production'),
+                    owner='root',
+                    group='root',
+                )
+
     create_env()
     make_symlinks()
     ensure_mongo()
