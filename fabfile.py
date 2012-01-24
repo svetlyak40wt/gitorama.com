@@ -40,7 +40,7 @@ def ensure_mongo():
     upstart_ensure('mongodb')
 
 
-def setup():
+def deploy():
     if env.environment == 'production':
         base_dir, relative_project_dir = os.path.split(env.project_dir)
         with cd(base_dir):
