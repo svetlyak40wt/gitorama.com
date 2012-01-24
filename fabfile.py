@@ -1,5 +1,6 @@
 from fabricant import *
 
+env.project = 'gitorama.com'
 
 def dev():
     env.hosts = ['vbox']
@@ -52,6 +53,8 @@ def setup():
     create_env()
     make_symlinks()
     ensure_mongo()
+    upstart_ensure('nginx')
+    restart()
 
 
 def runserver():
@@ -59,4 +62,23 @@ def runserver():
 
     with cd(env.project_dir):
         local('env/bin/python app.py')
+
+
+def sctl(command):
+    require('project', provided_by=['dev', 'production'])
+    vars = dict(command=command, project=env.project)
+    run('supervisorctl -c ~/etc/supervisord.conf %(command)s %(project)s' % vars)
+
+
+def restart():
+    sctl('restart')
+
+def stop():
+    sctl('stop')
+
+def start():
+    sctl('start')
+
+def status():
+    sctl('status')
 
