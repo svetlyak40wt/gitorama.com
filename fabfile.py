@@ -58,6 +58,18 @@ def deploy():
                 )
 
     create_env()
+
+    package_ensure([
+        'python-software-properties',
+    ])
+    sudo('add-apt-repository ppa:chris-lea/redis-server')
+
+    package_ensure([
+        'nginx',
+        'redis-server',
+        'python-redis',
+    ])
+
     make_symlinks()
     ensure_mongo()
     upstart_ensure('nginx')

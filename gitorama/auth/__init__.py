@@ -1,6 +1,5 @@
 import urllib
 import urlparse
-import requests
 
 from flask import (
     Blueprint,
@@ -8,6 +7,8 @@ from flask import (
     url_for, redirect, session,
     current_app,
 )
+
+from ..core import net
 
 
 bp = Blueprint('auth', __name__)
@@ -31,7 +32,7 @@ def logout():
 @bp.route('/callback', methods=['GET'])
 def auth_callback():
     code = request.args.get('code', '')
-    data = requests.post(
+    data = net.post(
         current_app.config['OAUTH_ACCESS_TOKEN_URL'],
         urllib.urlencode(dict(
             client_id=current_app.config['OAUTH_CLIENT_ID'],

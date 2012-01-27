@@ -1,7 +1,6 @@
 import anyjson
 import datetime
 import pymongo
-import requests
 
 from urlparse import urljoin
 
@@ -9,6 +8,9 @@ from flask import (
     Blueprint, request, render_template,
     session, g, current_app
 )
+
+from . import net
+from .cache import cache
 
 
 bp = Blueprint('core', __name__)
@@ -28,7 +30,7 @@ def before_request():
         user = g.db.users.find_one({'gitorama.token': token})
 
         if user is None:
-            response = requests.get(
+            response = net.get(
                 urljoin(
                     current_app.config['GITHUB_API_URL'],
                     '/user'

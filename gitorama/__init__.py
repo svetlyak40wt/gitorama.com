@@ -1,6 +1,7 @@
 import os
 
 from flask import Flask
+
 from . import auth
 from . import core
 
@@ -12,6 +13,8 @@ app.config.from_object(os.environ.get('SETTINGS', 'gitorama.settings.development
 app.register_blueprint(core.bp)
 app.register_blueprint(auth.bp, url_prefix='/auth')
 app.secret_key = SECRET_KEY
+
+core.cache.init_app(app)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8000, debug=True)
