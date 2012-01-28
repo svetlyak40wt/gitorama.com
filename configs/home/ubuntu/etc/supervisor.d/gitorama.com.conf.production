@@ -3,3 +3,5 @@ user = ubuntu
 command = /home/ubuntu/projects/gitorama.com/env/bin/gunicorn -b 127.0.0.1:40000 gitorama:app
 environment = SETTINGS="gitorama.settings.production"
 autorestart = true
+redirect_stderr = true
+stdout_logfile = /home/ubuntu/log/supervisord/gitorama.com.log
