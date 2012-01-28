@@ -3,3 +3,4 @@
 env
 *.egg-info
 .vim/ide.session
+pip-log.txt

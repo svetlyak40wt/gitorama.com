@@ -1,0 +1,29 @@
+#!/home/ubuntu/projects/gitorama.com/env/bin/python
+# -*- coding: utf-8 -*-
+
+from gitorama import app
+from gitorama.core.cache import cache
+from flaskext.script import Manager
+
+manager = Manager(app, with_default_commands=False)
+
+
+@manager.command
+def config():
+    print 'graph_title GitHub\'s Rate Limit'
+    print 'graph_args --base 1000 -l 0'
+    print 'graph_vlabel limit'
+    print 'limit.label limit'
+    print 'limit.info A rate limit. When near to zero, then we\'ll be blocked.'
+
+
+@manager.command
+def get_data():
+    limit = cache.get('rate-limit')
+    if limit is None:
+        limit = 1.0
+    print 'limit.value %0.2f' % (limit,)
+
+
+if __name__ == '__main__':
+    manager.run(default_command='get_data')
