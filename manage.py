@@ -1,9 +1,13 @@
 #!/usr/bin/env env/bin/python
 import datetime
+import anyjson
+
+from urlparse import urljoin
 
 from flask import g
 from flaskext.script import Manager
 from gitorama import core, app
+from gitorama.core import net
 
 
 manager = Manager(app)
@@ -17,6 +21,7 @@ def dump_config():
         u'%s = %r' % item for item in sorted(app.config.items())
     )
 
+
 @manager.command
 def update_users():
     """Updates users profiles and collects stats."""
@@ -25,10 +30,21 @@ def update_users():
         'followers', 'following', 'disk_usage', 'public_repos'
     )
 
-    for user in g.db.users.find():
+    for user in g.db.users.find({'gitorama.token': {'$exists': True}}):
 
         # update user's dict
-        new_data = g.db.users.find_one({'login': user['login']})
+        response = net.get(
+            urljoin(
+                app.config['GITHUB_API_URL'],
+                '/user'
+            ),
+            params=dict(
+                access_token=user['gitorama']['token']
+            ),
+            timeout=app.config['TIMEOUT'],
+        )
+        new_data = anyjson.deserialize(response.content)
+
         user.update(new_data)
         g.db.users.save(user)
 
