@@ -14,11 +14,10 @@
         <div class="topbar">
           <div class="fill">
             <div class="container">
-              <a class="brand" href="#">Gitorama!</a>
+              <a class="brand" href="/">Gitorama!</a>
               <ul class="nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li class="active"><a href="#about">About</a></li>
+                <li><a href="{{ url_for('forkfeed.index') }}">Forkfeed</a></li>
               </ul>
 
             {% if request.user %}
@@ -36,7 +35,7 @@
             {% endblock %}
 
             <footer>
-                <p>&copy; Alexander Artemenko 2011</p>
+                <p>&copy; 40 Ants 2011-2012</p>
             </footer>
         </div>
     </body>

@@ -1,4 +1,5 @@
 #!/usr/bin/env env/bin/python
+# -*- coding: utf-8 -*-
 import datetime
 import anyjson
 
@@ -31,24 +32,27 @@ def update_users():
     )
 
     for user in g.db.users.find({'gitorama.token': {'$exists': True}}):
+        gh = net.GitHub(token=user['gitorama']['token'])
 
-        # update user's dict
-        response = net.get(
-            urljoin(
-                app.config['GITHUB_API_URL'],
-                '/user'
-            ),
-            params=dict(
-                access_token=user['gitorama']['token']
-            ),
-            timeout=app.config['TIMEOUT'],
-        )
-        new_data = anyjson.deserialize(response.content)
-
-        user.update(new_data)
+        # update user's data
+        new_user_data = gh.get('/user')
+        user.update(new_user_data)
         g.db.users.save(user)
 
-        # save some stats
+        # update users's repositories
+        repositories = gh.get('/user/repos')
+
+        for rep in repositories:
+            rep_from_db = g.db.user_reps.find_one(
+                {
+                    'owner.login': rep['owner']['login'],
+                    'name': rep['name']
+                }
+            ) or {}
+            rep_from_db.update(rep)
+            g.db.user_reps.save(rep_from_db)
+
+
         today = datetime.date.today()
         today = datetime.datetime(today.year, today.month, today.day)
         key = dict(login=user['login'], date=today)
@@ -60,6 +64,19 @@ def update_users():
                 if key in stats_to_save
         )
         g.db.user_stats.save(stats)
+
+
+@manager.command
+def update_forkfeed():
+    """Updates users fork feeds."""
+    db = core.get_db()
+
+    for user in db.users.find():
+
+        # пройти по всем репозиториям пользователя
+        # найти их форки и записать в коллекцию
+        # ...
+        pass
 
 
 if __name__ == '__main__':
