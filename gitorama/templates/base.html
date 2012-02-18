@@ -1,44 +1,47 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
         <title>Gitorama</title>
-        <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
-        <style type="text/css">
-            body {
-                padding-top: 20px;
-            }
-        </style>
+        <link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon" />
+        {% assets "css_all" %}
+            <link rel="stylesheet" href="{{ ASSET_URL }}" />
+        {% endassets %}
+        {% assets "js_all" %}
+            <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+        {% endassets %}
     </head>
     <body>
-        <div class="topbar">
-          <div class="fill">
-            <div class="container">
-              <a class="brand" href="#">Gitorama!</a>
-              <ul class="nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-              </ul>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand" href="/">Gitorama!</a>
+                    <div class="nav-collapse">
+                        <ul class="nav">
+                            <li class="active"><a href="/">About</a></li>
+                            <li><a href="{{ url_for('forkfeed.index') }}">Forkfeed</a></li>
+                        </ul>
 
-            {% if request.user %}
-                <form action="{{ url_for('auth.logout') }}" method="POST" class="pull-right">
-                    <p style="color: gray"><img src="{{ request.user.avatar_url }}" width="20px" height="20px"/>{{ request.user.login }} <input type="submit" value="Log Out" class="btn danger"/></p>
-                </form>
-            {% endif %}
+                        {% if request.user %}
+                            <form action="{{ url_for('auth.logout') }}" method="POST" class="login-form pull-right">
+                                <img src="{{ request.user.avatar_url }}" width="20px" height="20px"/>{{ request.user.login }} <input type="submit" value="Log Out" class="btn danger"/>
+                            </form>
+                        {% endif %}
+                    </div><!--/.nav-collapse -->
+                </div>
             </div>
-          </div>
         </div>
 
         <div class="container">
-            <h1></h1>
+            <h1>TEST</h1>
             {% block content %}
             {% endblock %}
 
-            <footer>
-                <p>&copy; Alexander Artemenko 2011</p>
-            </footer>
         </div>
+
+        <footer>
+            <p>&copy; 40 Ants 2011-2012</p>
+        </footer>
     </body>
 </html>
 

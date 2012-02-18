@@ -39,6 +39,18 @@ def ensure_mongo():
 
     upstart_ensure('mongodb')
 
+def make_install(
+    dist='http://nodejs.org/dist/v0.6.10/node-v0.6.10.tar.gz',
+    prefix='~/usr',
+    check='~/usr/bin/node',
+):
+    # mkdir -p /tmp/build
+    # cd /tmp/build
+    # wget dist
+    # tar zxvf node-v0.6.10.tar.gz
+    # cd node-v0.6.10
+    # ./configure --prefix=~/usr
+
 
 def deploy():
     if env.environment == 'production':
@@ -68,10 +80,17 @@ def deploy():
         'nginx',
         'redis-server',
         'python-redis',
+        'g++',
     ])
 
     make_symlinks()
     ensure_mongo()
+
+    # if not ~/usr/bin/npm
+    #run('curl http://npmjs.org/install.sh | sh')
+    # if not usr/bin/lessc
+    # npm install -g less
+    # npm install -g coffee-script
     upstart_ensure('nginx')
     restart()
 

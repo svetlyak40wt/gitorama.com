@@ -4,3 +4,5 @@ env
 *.egg-info
 .vim/ide.session
 pip-log.txt
+gitorama/bootstrap/
+gitorama/static/.webassets-cache/

@@ -1,0 +1,63 @@
+@import "custom-bootstrap.less";
+
+// Body Styles and Layout
+body {
+    padding-top: @navbarHeight + 10px;
+}
+body > .container {
+    min-height: 200px;
+}
+
+// Header and Navigation
+.navbar {
+    .brand {
+        color: @grayDarker;
+    }
+    .login-form {
+        margin-bottom: 0px;
+    }
+
+    // Menu Items
+    .nav {
+        li {
+            > a {
+                padding: 0px;
+                margin: 10px 5px 11px;
+
+                color: @navbarLinkColor;
+                text-decoration: none;
+                text-shadow: none;
+            }
+            > a:hover {
+                background-color: transparent;
+                color: black;
+                text-decoration: none;
+                border-bottom: 3px solid @navbarLinkColor;
+                margin-bottom: 8px;
+            }
+
+            &.active {
+                > a,
+                > a:hover {
+                    color: @navbarLinkColorHover;
+                    text-decoration: none;
+                    background-color: @grayDarker;
+                    background-color: rgba(0,0,0,.3);
+                    border-bottom: none;
+                }
+                > a {
+                    padding: 5px 10px 5px;
+                    margin-top: 5px;
+                    margin-bottom: 6px;
+                }
+            } // active
+
+        }
+    } // end .nav
+}
+
+// Footer
+footer {
+    width: 400px;
+    margin: 0px auto;
+}
