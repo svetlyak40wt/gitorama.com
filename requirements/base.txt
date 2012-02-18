@@ -1,6 +1,8 @@
 -f http://pypi.svetlyak.ru
 
 -e .
+-e git+git://github.com/andymccurdy/redis-py.git#egg=redis
+
 Werkzeug==0.8.2
 Flask==0.8
 Flask-Script==0.3.1
