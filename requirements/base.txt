@@ -7,6 +7,8 @@ Flask-Script==0.3.1
 
 # My Fork from: http://github.com/svetlyak40wt/flask-cache/
 Flask-Cache==0.4.0-art1
+Flask-Assets==0.6.2
+jsmin==2.0.2
 
 requests==0.9.3
 pymongo==2.1.1

@@ -1,6 +1,7 @@
 import os
 
 from flask import Flask
+from flaskext.assets import Environment, Bundle
 
 from . import auth
 from . import core
@@ -17,6 +18,12 @@ app.register_blueprint(forkfeed.bp, url_prefix='/forkfeed')
 app.secret_key = SECRET_KEY
 
 core.cache.init_app(app)
+
+assets = Environment(app)
+css = Bundle('less/site.less', filters=['less'], output='css/site.css')
+assets.register('css_all', css)
+js = Bundle('coffee/site.coffee', filters=['coffeescript'], output='js/site.js')
+assets.register('js_all', js)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8000, debug=True)
