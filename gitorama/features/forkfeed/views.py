@@ -9,8 +9,8 @@ from flask import (
     session, g, current_app
 )
 
-from ..core import net
-from ..core.cache import cache
+from ...core import net
+from ...core.cache import cache
 
 
 bp = Blueprint('forkfeed', __name__)

@@ -9,6 +9,7 @@ from flask import g
 from flaskext.script import Manager
 from gitorama import core, app
 from gitorama.core import net
+from gitorama.features import forkfeed
 
 
 manager = Manager(app)
@@ -21,6 +22,17 @@ def dump_config():
     print u'\n'.join(
         u'%s = %r' % item for item in sorted(app.config.items())
     )
+
+
+@manager.command
+def show_stats():
+    """Dumps config"""
+
+    for key in ['rate-limit']:
+        print '{0}: {1}'.format(
+            key,
+            core.cache.get(key)
+        )
 
 
 @manager.command
@@ -69,14 +81,7 @@ def update_users():
 @manager.command
 def update_forkfeed():
     """Updates users fork feeds."""
-    db = core.get_db()
-
-    for user in db.users.find():
-
-        # пройти по всем репозиториям пользователя
-        # найти их форки и записать в коллекцию
-        # ...
-        pass
+    forkfeed.commands.update()
 
 
 if __name__ == '__main__':

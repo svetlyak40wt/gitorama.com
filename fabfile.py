@@ -44,6 +44,7 @@ def make_install(
     prefix='~/usr',
     check='~/usr/bin/node',
 ):
+    pass
     # mkdir -p /tmp/build
     # cd /tmp/build
     # wget dist

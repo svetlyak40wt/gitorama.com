@@ -25,6 +25,15 @@ get = track_ratelimit(requests.get)
 post = track_ratelimit(requests.post)
 
 
+class GitHubApiError(RuntimeError):
+    def __init__(self, response):
+        self.response = response
+    def __unicode__(self):
+        return u'GitHubApiError(status_code={0.status_code}, content={0.content})'.format(self.response)
+    def __str__(self):
+        return self.__unicode__().encode('utf-8')
+
+
 class GitHub(object):
     def __init__(self, token=None):
         self.token = token
@@ -49,6 +58,10 @@ class GitHub(object):
                 params=params,
                 timeout=current_app.config['TIMEOUT'],
             )
+
+            if not response.ok:
+                raise GitHubApiError(response)
+
             data = anyjson.deserialize(response.content)
 
             if 'link' in response.headers:

@@ -14,7 +14,7 @@ app.config.from_object(os.environ.get('SETTINGS', 'gitorama.settings.development
 
 app.register_blueprint(core.bp)
 app.register_blueprint(auth.bp, url_prefix='/auth')
-app.register_blueprint(forkfeed.bp, url_prefix='/forkfeed')
+app.register_blueprint(forkfeed.views.bp, url_prefix='/forkfeed')
 app.secret_key = SECRET_KEY
 
 core.cache.init_app(app)
