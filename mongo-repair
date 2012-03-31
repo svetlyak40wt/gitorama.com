@@ -1,0 +1,3 @@
+#!/bin/bash
+
+sudo -u mongodb mongod --dbpath=/var/lib/mongodb --repair
