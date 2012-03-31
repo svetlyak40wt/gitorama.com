@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{{ user['name'] or user['login'] }}</h1>
+    <img src="{{ user['avatar_url'] }}" />
+    <dl class="stats">
+        <dt>Following</dt><dd>{{ stats['following'] }}</dd>
+        <dt>Followers</dt><dd>{{ stats['followers'] }}</dd>
+        <dt>Public reps</dt><dd>{{ stats['public_repos'] }}</dd>
+    </dl>
+{% endblock %}
+
