@@ -21,7 +21,7 @@ def index():
     return render_template('index.html')
 
 
-@bp.before_request
+@bp.before_app_request
 def before_request():
     g.db = get_db()
 

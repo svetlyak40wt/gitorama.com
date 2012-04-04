@@ -1,4 +1,4 @@
-import time
+import datetime
 
 from gitorama import core
 from gitorama.core import net
@@ -7,7 +7,7 @@ def update():
     db = core.get_db()
     gh = net.GitHub()
 
-    timestamp = int(time.time())
+    today = datetime.datetime.utcnow()
 
     def track(handle, new_event, missing_event):
         collection = db[handle]
@@ -36,7 +36,7 @@ def update():
                 if followed:
                     db.events.insert(
                         (
-                            {'login': login, 'e': new_event, 'who': who, 'ts': timestamp}
+                            {'login': login, 'e': new_event, 'who': who, 'date': today}
                             for who in followed
                         ),
                         manipulate = False,
@@ -45,13 +45,14 @@ def update():
                 if unfollowed:
                     db.events.insert(
                         (
-                            {'login': login, 'e': missing_event, 'who': who, 'ts': timestamp}
+                            {'login': login, 'e': missing_event, 'who': who, 'date': today}
                             for who in unfollowed
                         ),
                         manipulate = False,
                     )
 
             doc['users'] = list(new)
+            doc['updated'] = today
             collection.save(doc, manipulate=False, safe=True)
 
     track('following', 'follow', 'unfollow')

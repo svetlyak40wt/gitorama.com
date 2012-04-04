@@ -9,7 +9,7 @@ from flask import g
 from flaskext.script import Manager
 from gitorama import core, app
 from gitorama.core import net
-from gitorama.features import forkfeed, relations_stats
+from gitorama.features import forkfeed, relations
 
 
 manager = Manager(app)
@@ -65,7 +65,7 @@ def update_users():
             g.db.user_reps.save(rep_from_db)
 
 
-        today = datetime.date.today()
+        today = datetime.date.utcnow()
         today = datetime.datetime(today.year, today.month, today.day)
         key = dict(login=user['login'], date=today)
         stats = g.db.user_stats.find_one(key) or key
@@ -87,7 +87,7 @@ def update_forkfeed():
 @manager.command
 def update_relations_stats():
     """Checks for new followers and who you followed too."""
-    relations_stats.commands.update()
+    relations.commands.update()
 
 
 if __name__ == '__main__':
