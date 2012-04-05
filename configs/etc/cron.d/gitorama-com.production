@@ -4,4 +4,4 @@ MAILTO=svetlyak.40wt@gmail.com
 0 * * * * ubuntu (cd /home/ubuntu/projects/gitorama.com && ./manage.py update_users)
 
 # update relations every day
-0 4 * * * art (cd /home/ubuntu/projects/gitorama.com && ./manage.py update_relations_stats)
+0 4 * * * ubintu (cd /home/ubuntu/projects/gitorama.com && ./manage.py update_relations_stats)
