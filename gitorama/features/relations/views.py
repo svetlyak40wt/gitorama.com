@@ -38,7 +38,9 @@ def index():
             if idx < num_days - 1:
                 siblings.append(followers[idx + 1])
             siblings = filter(None, siblings)
-            followers[idx] = sum(siblings) / len(siblings)
+
+            if siblings:
+                followers[idx] = sum(siblings) / len(siblings)
 
     return render_template(
         'relations.html',
