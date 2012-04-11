@@ -39,6 +39,7 @@ def ensure_mongo():
 
     upstart_ensure('mongodb')
 
+
 def make_install(
     dist='http://nodejs.org/dist/v0.6.10/node-v0.6.10.tar.gz',
     prefix='~/usr',
@@ -53,7 +54,7 @@ def make_install(
     # ./configure --prefix=~/usr
 
 
-def deploy():
+def _pull_sources():
     if env.environment == 'production':
         dir_ensure('/home/art/log/backend')
 
@@ -72,6 +73,9 @@ def deploy():
                     group='root',
                 )
 
+
+def deploy():
+    _pull_sources()
     create_env()
 
     package_ensure([
@@ -95,6 +99,13 @@ def deploy():
     # npm install -g less
     # npm install -g coffee-script
     upstart_ensure('nginx')
+    restart()
+
+
+def quick_deploy():
+    """ Just make git pull and restart, to deploy small fixes.
+    """
+    _pull_sources()
     restart()
 
 
