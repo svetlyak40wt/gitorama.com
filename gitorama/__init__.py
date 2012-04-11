@@ -1,4 +1,5 @@
 import os
+import logging
 
 from flask import Flask
 from flaskext.assets import Environment, Bundle
@@ -27,3 +28,4 @@ assets.register('css_all', css)
 js = Bundle('coffee/site.coffee', filters=['coffeescript'], output='js/site.js')
 assets.register('js_all', js)
 
+logging.basicConfig(filename=app.config['LOG_FILE'], level=logging.DEBUG)

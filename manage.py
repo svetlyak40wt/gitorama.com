@@ -1,10 +1,6 @@
 #!/usr/bin/env env/bin/python
 # -*- coding: utf-8 -*-
 import datetime
-import anyjson
-import logging
-
-from urlparse import urljoin
 
 from flask import g
 from flaskext.script import Manager
@@ -92,6 +88,5 @@ def update_relations_stats():
 
 
 if __name__ == '__main__':
-    logging.basicConfig(filename=app.config['LOG_FILE'], level=logging.DEBUG)
     manager.run()
 
