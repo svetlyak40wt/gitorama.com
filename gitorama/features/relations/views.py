@@ -30,17 +30,14 @@ def index():
         if day_from_today < num_days:
             followers[day_from_today] = item['followers']
 
-    for idx in range(num_days):
-        if followers[idx] is None:
-            siblings = []
-            if idx > 0:
-                siblings.append(followers[idx - 1])
-            if idx < num_days - 1:
-                siblings.append(followers[idx + 1])
-            siblings = filter(None, siblings)
+    values = filter(None, followers)
+    prev_value = values and values[0] or 0
 
-            if siblings:
-                followers[idx] = sum(siblings) / len(siblings)
+    for idx, value in enumerate(followers):
+        if value is None:
+            followers[idx] = prev_value
+        else:
+            prev_value = value
 
     return render_template(
         'relations.html',
