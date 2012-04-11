@@ -27,6 +27,3 @@ assets.register('css_all', css)
 js = Bundle('coffee/site.coffee', filters=['coffeescript'], output='js/site.js')
 assets.register('js_all', js)
 
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=8000, debug=True)
-

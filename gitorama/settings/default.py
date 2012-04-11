@@ -5,3 +5,5 @@ TIMEOUT = 5
 
 CACHE_TYPE = 'redis'
 CACHE_KEY_PREFIX = 'grama:'
+
+LOG_FILE = 'gitorama.log'

@@ -6,3 +6,4 @@ env
 pip-log.txt
 gitorama/bootstrap/
 gitorama/static/.webassets-cache/
+*.log

@@ -55,6 +55,8 @@ def make_install(
 
 def deploy():
     if env.environment == 'production':
+        dir_ensure('/home/art/log/backend')
+
         base_dir, relative_project_dir = os.path.split(env.project_dir)
         with cd(base_dir):
             if dir_exists(relative_project_dir):

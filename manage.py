@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import datetime
 import anyjson
+import logging
 
 from urlparse import urljoin
 
@@ -91,5 +92,6 @@ def update_relations_stats():
 
 
 if __name__ == '__main__':
+    logging.basicConfig(filename=app.config['LOG_FILE'], level=logging.DEBUG)
     manager.run()
 
