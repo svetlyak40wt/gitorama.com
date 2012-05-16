@@ -57,6 +57,8 @@ def make_install(
 def _pull_sources():
     if env.environment == 'production':
         dir_ensure('/home/art/log/backend')
+        dir_ensure('/home/art/log/gitorama')
+        dir_ensure('/home/art/log/supervisord')
 
         base_dir, relative_project_dir = os.path.split(env.project_dir)
         with cd(base_dir):
@@ -119,7 +121,7 @@ def runserver():
 def sctl(command):
     require('project', provided_by=['dev', 'production'])
     vars = dict(command=command, project=env.project)
-    run('supervisorctl -c ~/etc/supervisord.conf %(command)s %(project)s' % vars)
+    run('supervisorctl %(command)s %(project)s' % vars)
 
 
 def restart():
