@@ -57,7 +57,14 @@ def teardown_request(exception):
 
 
 def get_db():
-    conn = pymongo.Connection('localhost', 27017)
+    conn = pymongo.Connection(
+        host=[
+            'localhost:32001',
+            'localhost:32002',
+            'localhost:32003',
+        ],
+        w=2
+    )
     return conn.gitorama
 
 

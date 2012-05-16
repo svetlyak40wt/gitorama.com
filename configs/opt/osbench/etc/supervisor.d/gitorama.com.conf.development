@@ -1,0 +1,27 @@
+[program:gitorama.com]
+user = ubuntu
+command = /vagrant/gitorama.com/env/bin/gunicorn -b 127.0.0.1:40000 gitorama:app
+environment = SETTINGS="gitorama.settings.development"
+autorestart = true
+redirect_stderr = true
+stdout_logfile = /opt/osbench/var/log/supervisord/gitorama.com.log
+
+
+[program:gitorama.mongo1]
+user = mongodb
+command = /usr/bin/mongod --config /vagrant/gitorama.com/configs/mongo/devel/rs1.conf
+redirect_stderr = true
+stdout_logfile = /home/art/log/gitorama/mongodb-rs1.log
+
+[program:gitorama.mongo2]
+user = mongodb
+command = /usr/bin/mongod --config /vagrant/gitorama.com/configs/mongo/devel/rs2.conf
+redirect_stderr = true
+stdout_logfile = /home/art/log/gitorama/mongodb-rs2.log
+
+[program:gitorama.mongo3]
+user = mongodb
+command = /usr/bin/mongod --config /vagrant/gitorama.com/configs/mongo/devel/rs3.conf
+redirect_stderr = true
+stdout_logfile = /home/art/log/gitorama/mongodb-rs3.log
+
