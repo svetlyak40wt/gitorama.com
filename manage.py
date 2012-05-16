@@ -62,7 +62,7 @@ def update_users():
             g.db.user_reps.save(rep_from_db)
 
 
-        today = datetime.date.utcnow()
+        today = datetime.datetime.utcnow()
         today = datetime.datetime(today.year, today.month, today.day)
         key = dict(login=user['login'], date=today)
         stats = g.db.user_stats.find_one(key) or key
