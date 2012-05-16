@@ -4,8 +4,8 @@ upstream gitorama_server {
 
 server {
     listen 80;
-    server_name gitorama.com;
-    access_log /home/art/log/nginx/dev.gitorama.com.log;
+    server_name gitorama.com new.gitorama.com;
+    access_log /home/art/log/nginx/gitorama.com.log;
 
     # path for static files
     root /home/art/projects/gitorama.com;
