@@ -5,10 +5,10 @@ upstream gitorama_server {
 server {
     listen 80;
     server_name gitorama.com;
-    access_log /home/ubuntu/log/nginx/dev.gitorama.com.log;
+    access_log /home/art/log/nginx/dev.gitorama.com.log;
 
     # path for static files
-    root /home/ubuntu/projects/gitorama.com;
+    root /home/art/projects/gitorama.com;
 
     location / {
         # checks for static file, if not found proxy to app
