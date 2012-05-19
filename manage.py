@@ -1,13 +1,14 @@
 #!/usr/bin/env env/bin/python
 # -*- coding: utf-8 -*-
-import datetime
+import times
 
 from flask import g
 from flaskext.script import Manager
 from gitorama import core, app
-from gitorama.core import net
 from gitorama.features import forkfeed, relations
 
+from rq import Queue, use_connection
+from gitorama.core.jobs import update_user
 
 manager = Manager(app)
 
@@ -36,43 +37,20 @@ def show_stats():
 def update_users():
     """Updates users profiles and collects stats."""
     g.db = core.get_db()
-    stats_to_save = (
-        'followers', 'following', 'disk_usage', 'public_repos'
-    )
+    use_connection()
+    q = Queue()
+    now = times.now()
 
-    for user in g.db.users.find({'gitorama.token': {'$exists': True}}):
-        gh = net.GitHub(token=user['gitorama']['token'])
+    users_to_update = g.db.users.find({
+        'gitorama.token': {'$exists': True},
+        '$or': [
+            {'gitorama.update_at': {'$exists': False}},
+            {'gitorama.update_at': {'$lte': now}},
+        ],
+    })
 
-        # update user's data
-        new_user_data = gh.get('/user')
-        user.update(new_user_data)
-        g.db.users.save(user)
-
-        # update users's repositories
-        repositories = gh.get('/user/repos')
-
-        for rep in repositories:
-            rep_from_db = g.db.user_reps.find_one(
-                {
-                    'owner.login': rep['owner']['login'],
-                    'name': rep['name']
-                }
-            ) or {}
-            rep_from_db.update(rep)
-            g.db.user_reps.save(rep_from_db)
-
-
-        today = datetime.date.utcnow()
-        today = datetime.datetime(today.year, today.month, today.day)
-        key = dict(login=user['login'], date=today)
-        stats = g.db.user_stats.find_one(key) or key
-
-        stats.update(
-            (key, value)
-            for key, value in user.iteritems()
-                if key in stats_to_save
-        )
-        g.db.user_stats.save(stats)
+    for user in users_to_update:
+        q.enqueue(update_user, user['login'])
 
 
 @manager.command
