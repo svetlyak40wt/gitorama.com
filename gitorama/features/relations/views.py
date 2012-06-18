@@ -42,6 +42,7 @@ def index():
     return render_template(
         'relations.html',
         followers=reversed(followers),
+        events=db.events.find({'login': request.user['login']}),
         start=today - datetime.timedelta(days=num_days),
     )
 

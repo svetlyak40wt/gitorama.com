@@ -15,3 +15,4 @@ jsmin==2.0.2
 requests==0.9.3
 pymongo==2.1.1
 anyjson==0.3.1
+rq==0.1.2

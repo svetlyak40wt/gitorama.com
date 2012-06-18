@@ -4,19 +4,18 @@ import datetime
 from flask import g
 from gitorama import core, app
 from gitorama.core import net
-from functools import wraps
+from gitorama.core.pipeline import job
 
 
-def job(func):
-    @wraps(func)
-    def decorator(*args, **kwargs):
-        with app.test_request_context():
-            return func(*args, **kwargs)
-
-    return decorator
-
-
-@job
+@job(
+    lambda db: (u['login'] for u in db.users.find({
+        'gitorama.token': {'$exists': True},
+        '$or': [
+            {'gitorama.update_at': {'$exists': False}},
+            {'gitorama.update_at': {'$lte': times.now()}},
+        ],
+    }, {'login': True})),
+)
 def update_user(login):
     g.db = core.get_db()
     now = times.now()
@@ -59,4 +58,5 @@ def update_user(login):
             if key in stats_to_save
     )
     g.db.user_stats.save(stats)
+
 

@@ -9,6 +9,7 @@ from gitorama.features import forkfeed, relations
 
 from rq import Queue, use_connection
 from gitorama.core.jobs import update_user
+from gitorama.core.pipeline import processor
 
 manager = Manager(app)
 
@@ -33,24 +34,6 @@ def show_stats():
         )
 
 
-@manager.command
-def update_users():
-    """Updates users profiles and collects stats."""
-    g.db = core.get_db()
-    use_connection()
-    q = Queue()
-    now = times.now()
-
-    users_to_update = g.db.users.find({
-        'gitorama.token': {'$exists': True},
-        '$or': [
-            {'gitorama.update_at': {'$exists': False}},
-            {'gitorama.update_at': {'$lte': now}},
-        ],
-    })
-
-    for user in users_to_update:
-        q.enqueue(update_user, user['login'])
 
 
 @manager.command
@@ -60,9 +43,8 @@ def update_forkfeed():
 
 
 @manager.command
-def update_relations_stats():
-    """Checks for new followers and who you followed too."""
-    relations.commands.update()
+def push_processes(debug=False):
+    processor.run(debug=debug)
 
 
 if __name__ == '__main__':

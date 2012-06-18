@@ -44,4 +44,10 @@
          }]
       });
     </script>
+    <h2>Events</h2>
+    <ul>
+    {% for event in events %}
+        <li>{{ event.e }}, {{ event.who }}, {{ event.date }}</li>
+    {% endfor %}
+    </ul>
 {% endblock %}
