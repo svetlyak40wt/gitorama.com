@@ -1,6 +1,7 @@
 #!/usr/bin/env env/bin/python
 # -*- coding: utf-8 -*-
 import times
+import logging
 
 from flask import g
 from flaskext.script import Manager
@@ -46,6 +47,17 @@ def update_forkfeed():
 def push_processes(debug=False):
     processor.run(debug=debug)
 
+
+@manager.command
+def test_logging():
+    logger = logging.getLogger('blah')
+    logger.info('Some info')
+    logger.warning('Some warning')
+    logger.error('Some error')
+    try:
+        print unknown_variable
+    except Exception:
+        logger.exception('Some exception')
 
 if __name__ == '__main__':
     manager.run()

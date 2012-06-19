@@ -46,3 +46,7 @@ def index():
         start=today - datetime.timedelta(days=num_days),
     )
 
+@bp.route("/raise-exception")
+def raise_exception():
+    raise RuntimeError('blah, debug=%r' % current_app.debug)
+

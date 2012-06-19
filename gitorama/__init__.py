@@ -29,3 +29,23 @@ js = Bundle('coffee/site.coffee', filters=['coffeescript'], output='js/site.js')
 assets.register('js_all', js)
 
 logging.basicConfig(filename=app.config['LOG_FILE'], level=logging.DEBUG)
+
+if not app.debug:
+    mail_handler = logging.handlers.SMTPHandler(
+        #('mailtrap.io', '2525'),
+        ('localhost', '25'),
+        'server-error@gitorama.com',
+        ['svetlyak.40wt@gmail.com'],
+        'gitorama.com ERROR',
+        #credentials=('dev-gitorama-com', '35164686f8911b01'),
+    )
+    #mail_handler = logging.handlers.SMTPHandler(
+    #    ('mailtrap.io', '2525'),
+    #    'server-error@gitorama.com',
+    #    ['svetlyak.40wt@gmail.com'],
+    #    'gitorama.com ERROR',
+    #    credentials=('dev-gitorama-com', '35164686f8911b01'),
+    #)
+    mail_handler.setLevel(logging.ERROR)
+    logging.getLogger().addHandler(mail_handler)
+

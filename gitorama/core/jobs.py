@@ -1,4 +1,5 @@
 import times
+import logging
 import datetime
 
 from flask import g
@@ -59,4 +60,8 @@ def update_user(login):
     )
     g.db.user_stats.save(stats)
 
+
+@job(lambda db: [1])
+def log_error(number):
+    logging.getLogger('blah').error('Some error from job')
 

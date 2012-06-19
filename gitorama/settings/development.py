@@ -1,6 +1,6 @@
 from .default import *
 
-DEBUG = False
+DEBUG = True
 
 OAUTH_AUTHORIZE_URL = 'https://github.com/login/oauth/authorize'
 OAUTH_ACCESS_TOKEN_URL = 'https://github.com/login/oauth/access_token'
