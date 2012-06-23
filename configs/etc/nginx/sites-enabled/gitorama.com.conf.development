@@ -4,7 +4,7 @@ server {
     access_log /home/art/log/nginx/dev.gitorama.com.log;
 
     # path for static files
-    root /vagrant/gitorama.com;
+    root /vagrant/gitorama.com/www;
 
     location / {
         # checks for static file, if not found proxy to app

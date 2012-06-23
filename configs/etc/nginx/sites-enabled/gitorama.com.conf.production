@@ -8,7 +8,7 @@ server {
     access_log /home/art/log/nginx/gitorama.com.log;
 
     # path for static files
-    root /home/art/projects/gitorama.com;
+    root /home/art/projects/gitorama.com/www;
 
     location / {
         # checks for static file, if not found proxy to app
