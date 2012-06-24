@@ -2,9 +2,19 @@
 
 {% block content %}
     {% if not request.user %}
-        <h2>Please, sign in, using your GitHub account.</h2>
+        <h2>What Gitorama is? It is egocentric view on github!</h2>
+        <h3>It is:</h3>
+        <ul>
+            <li>yours personal digests;</li>
+            <li>yours archivements;</li>
+            <li>stats of yours projects;</li>
+            <li>and more…</li>
+        </ul>
+
         <form action="{{ url_for('auth.login') }}" method="POST">
-            <input type="submit" value="Sign In Using GitHub!" class="btn primary"/>
+            <p>Use your GitHub account to <input type="submit" value="Sign Up" class="btn primary"/> or <input type="submit" value="Sign In!" class="btn"/></p>
         </form>
+    {% else %}
+        <p class="big-centered-text">Right now we are aggregating content for you. We'll mail you when this process will be finished.</p>
     {% endif %}
 {% endblock %}

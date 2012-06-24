@@ -2914,13 +2914,18 @@ body {
   padding-top: 50px;
 }
 body > .container {
-  min-height: 200px;
+  min-height: 600px;
 }
 .navbar .brand {
   color: #222222;
 }
 .navbar .login-form {
   margin-bottom: 0px;
+}
+.navbar .login-form img {
+  position: relative;
+  top: 5px;
+  left: -3px;
 }
 .navbar .nav li > a {
   padding: 0px;
@@ -2952,4 +2957,11 @@ body > .container {
 footer {
   width: 400px;
   margin: 0px auto;
+  text-align: center;
+}
+.big-centered-text {
+  font-size: 2em;
+  line-height: 2em;
+  margin-top: 100px;
+  text-align: center;
 }
