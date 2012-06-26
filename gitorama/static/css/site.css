@@ -964,8 +964,8 @@ select:focus:required:invalid:focus {
 }
 .input-prepend .active,
 .input-append .active {
-  background-color: #a9dba9;
-  border-color: #46a546;
+  background-color: #9af841;
+  border-color: #4e9a06;
 }
 .input-prepend .add-on {
   *margin-top: 1px;
@@ -2964,4 +2964,20 @@ footer {
   line-height: 2em;
   margin-top: 100px;
   text-align: center;
+}
+.flashes {
+  list-style: none;
+  margin-left: 0;
+  text-align: center;
+  margin-bottom: 1em;
+}
+.flashes li {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+.flashes .error {
+  background: rgba(164, 0, 0, 0.5);
+}
+.flashes .message {
+  background: rgba(78, 154, 6, 0.5);
 }

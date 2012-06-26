@@ -1,5 +1,7 @@
 @import "custom-bootstrap.less";
 
+// colors: http://tango.freedesktop.org/Tango_Icon_Theme_Guidelines
+
 // Body Styles and Layout
 body {
     padding-top: @navbarHeight + 10px;
@@ -74,4 +76,27 @@ footer {
     line-height: 2em;
     margin-top: 100px;
     text-align: center;
+}
+
+@red: #a40000;
+@green: #4e9a06;
+@blue: #3465a4;
+
+.flashes {
+    list-style: none;
+    margin-left: 0;
+    text-align: center;
+    margin-bottom: 1em;
+
+    li {
+        padding-top: 0.5em;
+        padding-bottom: 0.5em;
+    }
+
+    .error {
+        background: fade(@red, 50%);
+    }
+    .message {
+        background: fade(@green, 50%);
+    }
 }

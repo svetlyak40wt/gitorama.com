@@ -1,0 +1,12 @@
+<html>
+    <body>
+        <p>Dear user,</p>
+
+        <p>You received this message to validate email at gitorama.com.<br/>
+        If you did not registered at this service, just ignore this email.</p>
+
+        <p>To continue, go to <a href="http://{{ request.host }}{{ url_for('auth.validation', token=token) }}">this link</a> and activate your account.</p>
+
+        <p>Yours, Gitobot Alexandrovich.</p>
+    </body>
+</html>

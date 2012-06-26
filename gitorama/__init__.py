@@ -3,6 +3,7 @@ import logging
 
 from flask import Flask
 from flaskext.assets import Environment, Bundle
+from flaskext.mail import Mail
 
 from . import auth
 from . import core
@@ -20,6 +21,7 @@ app.register_blueprint(relations.views.bp, url_prefix='/relations')
 app.register_blueprint(userprofile.views.bp)
 app.secret_key = SECRET_KEY
 
+app.mail = Mail(app)
 core.cache.init_app(app)
 
 assets = Environment(app)

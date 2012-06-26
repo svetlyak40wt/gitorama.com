@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Email Validation</h2>
+
+    <p>To finish registration, confirm your email address: <b>{{ email }}</b>.</p>
+
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <p><input type="submit" value="Yes, this is my email" class="btn"/></p>
+    </form>
+{% endblock %}
+
+

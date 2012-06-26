@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Resend Validation Email</h2>
+
+    <p>When you'll press this button, validation email will be sent to <b>{{ email }}</b> email.</p>
+
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <p><input type="submit" value="Send!" class="btn"/></p>
+    </form>
+{% endblock %}
+
+
+

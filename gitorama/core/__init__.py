@@ -6,7 +6,9 @@ from urlparse import urljoin
 
 from flask import (
     Blueprint, request, render_template,
-    session, g, current_app
+    session, g, current_app,
+    flash,
+    url_for,
 )
 
 from . import net
@@ -23,6 +25,9 @@ def index():
 
 @bp.before_app_request
 def before_request():
+    if request.path.startswith('/static/'):
+        return
+
     g.db = get_db()
 
     token = session.get('token')
@@ -48,6 +53,15 @@ def before_request():
             g.db.users.save(user)
 
         request.user = user
+
+        if user.get('gitorama', {}).get('unverified_email') and \
+                not request.path.startswith('/auth/'):
+            flash(
+                'Please, verify email. If you don\'t received verification email, <a href="{url}">click here</a>.'.format(
+                    url=url_for('auth.resend_validation_email'),
+                ),
+                'error'
+            )
 
 
 @bp.teardown_request
