@@ -1,6 +1,7 @@
 #!/usr/bin/env env/bin/python
 # -*- coding: utf-8 -*-
 import times
+import subprocess
 import logging
 
 from flask import g
@@ -58,6 +59,14 @@ def test_logging():
         print unknown_variable
     except Exception:
         logger.exception('Some exception')
+
+
+@manager.command
+def dbshell():
+    db = core.get_db()
+    result = db.connection.admin.command({'isMaster': 1})
+    host, port = result['primary'].split(':')
+    subprocess.call('mongo --host "{host}" --port "{port}" "{db.name}"'.format(**locals()), shell=True)
 
 if __name__ == '__main__':
     manager.run()
