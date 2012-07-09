@@ -71,14 +71,13 @@ def teardown_request(exception):
 
 
 def get_db():
-    conn = pymongo.Connection(
-        host=[
-            'localhost:32001',
-            'localhost:32002',
-            'localhost:32003',
-        ],
-        w=2
-    )
+    mongo_hosts = current_app.config['MONGO_HOSTS'],
+    if len(mongo_hosts) == 1:
+        options = dict(host=mongo_hosts[0])
+    else:
+        options = dict(host=mongo_hosts, w=2)
+
+    conn = pymongo.Connection(**options)
     return conn.gitorama
 
 

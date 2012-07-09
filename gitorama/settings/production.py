@@ -6,3 +6,9 @@ OAUTH_CLIENT_ID = 'b1c68251f690bb495097'
 OAUTH_SECRET = '39a56d4721d884a200ba72362468e44be0a5167c'
 
 LOG_FILE = '/home/art/log/backend/gitorama.log'
+
+MONGO_HOSTS = [
+    'localhost:32001',
+    'localhost:32002',
+    'localhost:32003',
+]
