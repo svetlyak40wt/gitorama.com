@@ -8,3 +8,5 @@ gitorama/bootstrap/
 gitorama/static/.webassets-cache/
 *.log
 .vagrant
+/Vagrantfile
+/configs/package.box
