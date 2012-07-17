@@ -1,1 +1,8 @@
+vagrant init gitorama
+vagrant up
+vagrant ssh
+
+# if it is fail, then try again
 python virtualenv.py env
+
+env/bin/pip install -r requirements/development.txt
