@@ -1,0 +1,11 @@
+# ~/.tmuxinator/gitorama.yml
+
+project_name: Gitorama
+project_root: /vagrant
+tabs:
+  - shell: git pull
+  - editor: vim
+  - server: ./run.sh
+  - worker: ./worker.py
+  - database: mongo gitorama
+  - logs: tail -F gitorama.log
