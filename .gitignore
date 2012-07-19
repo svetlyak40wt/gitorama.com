@@ -9,5 +9,5 @@ gitorama/static/.webassets-cache/
 *.log
 .vagrant
 /Vagrantfile
-/configs/package.box
+/configs/*.box
 /dump
