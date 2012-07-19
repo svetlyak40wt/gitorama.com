@@ -35,6 +35,8 @@ def before_request():
         user = g.db.users.find_one({'gitorama.token': token})
 
         if user is None:
+            # this is either a new user, nor he is already
+            # exists in our database but with another token
             response = net.get(
                 urljoin(
                     current_app.config['GITHUB_API_URL'],
@@ -46,10 +48,18 @@ def before_request():
                 timeout=current_app.config['TIMEOUT'],
             )
             user = anyjson.deserialize(response.content)
-            user['gitorama'] = dict(
-                registered_at=datetime.datetime.utcnow(),
-                token=token,
-            )
+
+            existing_user = g.db.users.find_one({'login': user['login']})
+            if existing_user is None:
+                user['gitorama'] = dict(
+                    registered_at=datetime.datetime.utcnow(),
+                    token=token,
+                )
+            else:
+                existing_user.setdefault('gitorama', {})
+                existing_user['gitorama']['token'] = token
+                user = existing_user
+
             g.db.users.save(user)
 
         request.user = user
