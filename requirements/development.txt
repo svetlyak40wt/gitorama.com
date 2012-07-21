@@ -1,2 +1,3 @@
 -r base.txt
 pdbpp==0.7.2
+flask-debugtoolbar==0.7.1

@@ -2,7 +2,8 @@ import os
 import logging
 
 from flask import Flask
-from flask.ext.assets import Environment, Bundle, ManageAssets
+from flask.ext.assets import Environment, Bundle
+from flask.ext.debugtoolbar import DebugToolbarExtension
 from flask.ext.mail import Mail
 
 from . import auth
@@ -23,6 +24,7 @@ app.secret_key = SECRET_KEY
 
 app.mail = Mail(app)
 core.cache.init_app(app)
+toolbar = DebugToolbarExtension(app)
 
 assets = Environment(app)
 assets.cache = False
