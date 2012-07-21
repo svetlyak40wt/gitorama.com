@@ -5,7 +5,8 @@ import subprocess
 import logging
 
 from flask import g
-from flaskext.script import Manager
+from flask.ext.script import Manager
+from flask.ext.assets import ManageAssets
 from gitorama import core, app
 from gitorama.features import forkfeed, relations
 
@@ -14,6 +15,7 @@ from gitorama.core.jobs import update_user
 from gitorama.core.pipeline import processor
 
 manager = Manager(app)
+manager.add_command("assets", ManageAssets())
 
 
 @manager.command
