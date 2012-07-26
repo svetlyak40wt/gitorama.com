@@ -79,6 +79,13 @@ def dbshell():
     host, port = result['primary'].split(':')
     subprocess.call('mongo --host "{host}" --port "{port}" "{db.name}"'.format(**locals()), shell=True)
 
+
+@manager.command
+def migrate():
+    from gitorama import migrations
+    migrations.migrate()
+
+
 if __name__ == '__main__':
     manager.run()
 
