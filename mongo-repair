@@ -1,11 +1,14 @@
 #!/bin/bash
 
-sudo -u mongodb mongod --dbpath=/var/lib/mongodb/gitorama/rs1 --repair
-sudo -u mongodb mongod --dbpath=/var/lib/mongodb/gitorama/rs2 --repair
-sudo -u mongodb mongod --dbpath=/var/lib/mongodb/gitorama/rs3 --repair
+sudo -u mongodb mongod --dbpath=/var/lib/mongodb --repair
+sudo /etc/init.d/mongodb start
 
-supervisorctl start gitorama.mongo1
-supervisorctl start gitorama.mongo2
-supervisorctl start gitorama.mongo3
+#sudo -u mongodb mongod --dbpath=/var/lib/mongodb/gitorama/rs1 --repair
+#sudo -u mongodb mongod --dbpath=/var/lib/mongodb/gitorama/rs2 --repair
+#sudo -u mongodb mongod --dbpath=/var/lib/mongodb/gitorama/rs3 --repair
+#
+#supervisorctl start gitorama.mongo1
+#supervisorctl start gitorama.mongo2
+#supervisorctl start gitorama.mongo3
 
 ps auxw | grep mongodb
