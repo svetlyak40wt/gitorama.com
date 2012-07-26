@@ -3,12 +3,17 @@
 import times
 import subprocess
 import logging
+import datetime
+
+# to activate jobs
+import gitorama.features.digest.jobs
 
 from flask import g
 from flask.ext.script import Manager
 from flask.ext.assets import ManageAssets
 from gitorama import core, app
 from gitorama.features import forkfeed, relations
+from time import sleep
 
 from rq import Queue, use_connection
 from gitorama.core.jobs import update_user
@@ -38,8 +43,6 @@ def show_stats():
         )
 
 
-
-
 @manager.command
 def update_forkfeed():
     """Updates users fork feeds."""
@@ -47,8 +50,14 @@ def update_forkfeed():
 
 
 @manager.command
-def push_processes(debug=False):
-    processor.run(debug=debug)
+def push_processes(debug=False, periodically=None):
+    if periodically is None:
+        processor.run(debug=debug)
+    else:
+        while True:
+            processor.run(debug=debug)
+            sleep(int(periodically) * 60)
+
 
 
 @manager.command
