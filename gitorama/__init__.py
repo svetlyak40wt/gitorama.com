@@ -2,8 +2,9 @@ import os
 import logging
 
 from flask import Flask
-from flaskext.assets import Environment, Bundle
-from flaskext.mail import Mail
+from flask.ext.assets import Environment, Bundle
+from flask.ext.debugtoolbar import DebugToolbarExtension
+from flask.ext.mail import Mail
 
 from . import auth
 from . import core
@@ -23,8 +24,12 @@ app.secret_key = SECRET_KEY
 
 app.mail = Mail(app)
 core.cache.init_app(app)
+toolbar = DebugToolbarExtension(app)
 
 assets = Environment(app)
+assets.cache = False
+assets.manifest = 'file:'
+
 css = Bundle('less/site.less', filters=['less'], output='css/site.css')
 assets.register('css_all', css)
 js = Bundle('coffee/site.coffee', filters=['coffeescript'], output='js/site.js')
@@ -32,22 +37,22 @@ assets.register('js_all', js)
 
 logging.basicConfig(filename=app.config['LOG_FILE'], level=logging.DEBUG)
 
-if not app.debug:
+if app.config.get('ENVIRONMENT') == 'production':
     mail_handler = logging.handlers.SMTPHandler(
-        #('mailtrap.io', '2525'),
-        ('localhost', '25'),
+        ('mailtrap.io', '2525'),
         'server-error@gitorama.com',
         ['svetlyak.40wt@gmail.com'],
         'gitorama.com ERROR',
-        #credentials=('dev-gitorama-com', '35164686f8911b01'),
+        credentials=('dev-gitorama-com', '35164686f8911b01'),
     )
-    #mail_handler = logging.handlers.SMTPHandler(
-    #    ('mailtrap.io', '2525'),
-    #    'server-error@gitorama.com',
-    #    ['svetlyak.40wt@gmail.com'],
-    #    'gitorama.com ERROR',
-    #    credentials=('dev-gitorama-com', '35164686f8911b01'),
-    #)
-    mail_handler.setLevel(logging.ERROR)
-    logging.getLogger().addHandler(mail_handler)
+else:
+    mail_handler = logging.handlers.SMTPHandler(
+        ('localhost', '2525'),
+        'server-error@gitorama.com',
+        ['svetlyak.40wt@gmail.com'],
+        'gitorama.com ERROR',
+    )
+
+mail_handler.setLevel(logging.ERROR)
+logging.getLogger().addHandler(mail_handler)
 

@@ -11,3 +11,8 @@ CACHE_KEY_PREFIX = 'grama:'
 LOG_FILE = 'gitorama.log'
 
 USER_UPDATE_INTERVAL = datetime.timedelta(0, 60 * 60)
+
+MONGO_HOSTS = [
+    'localhost:27017'
+]
+

@@ -1,4 +1,4 @@
-#!/usr/bin/env env/bin/python
+#!/usr/bin/env python
 
 from rq import Worker, Queue
 from rq.scripts.rqworker import setup_redis, parse_args

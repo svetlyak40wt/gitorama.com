@@ -12,6 +12,7 @@ def dev():
 
 def production():
     env.hosts = ['people']
+    env.user = 'art'
     env.environment = 'production'
     env.project_dir = '/home/art/projects/gitorama.com'
     env.repository = '~/git-private/gitorama.com.git'

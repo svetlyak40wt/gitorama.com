@@ -1,0 +1,9 @@
+vagrant init gitorama
+vagrant up
+vagrant ssh
+
+# сохранить базу
+mongodump --db gitorama
+
+# восстановить базу
+mongorestore

@@ -1,0 +1,10 @@
+project_name: Gitorama
+project_root: /vagrant
+tabs:
+  - editor: vim
+  - shell: git pull
+  - server: ./run.sh
+  - worker: ./worker.py
+  - database: mongo gitorama
+  - logs: tail -F gitorama.log
+  - mail: python -m smtpd -n -c DebuggingServer localhost:2525

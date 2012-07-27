@@ -11,11 +11,11 @@ Flask-Mail==0.6.1
 # My Fork from: http://github.com/svetlyak40wt/flask-cache/ was already merged to upstream
 #Flask-Cache==0.4.0-art1
 -e git+git://github.com/thadeusb/flask-cache.git@9abd8838c77f0bfacd0b2dd5798246b030f8dc6d#egg=Flask-Cache
-Flask-Assets==0.6.2
+Flask-Assets==0.7
 Flask-WTF==0.6
 jsmin==2.0.2
 
-requests==0.9.3
+requests==0.10.1
 pymongo==2.1.1
 anyjson==0.3.1
 rq==0.1.2
