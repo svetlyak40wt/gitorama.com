@@ -24,3 +24,6 @@ user = mongodb
 command = /usr/bin/mongod --config /home/art/projects/gitorama.com/configs/mongo/production/rs3.conf
 redirect_stderr = true
 stdout_logfile = /home/art/log/supervisord/gitorama-mongodb-rs3.log
+
+[group:gitorama.mongo]
+programs = gitorama.mongo1,gitorama.mongo2,gitorama.mongo3
