@@ -79,3 +79,47 @@ class GitHub(object):
             )
         )
 
+    def get_iter(self, resource, **kwargs):
+        """
+        '<https://api.github.com/user/repos?access_token=0e2bc18dab04cd09b02fa3f1b9f735896ac8569d&page=2>; rel="next", <https://api.github.com/user/repos?access_token=0e2bc18dab04cd09b02fa3f1b9f735896ac8569d&page=3>; rel="last"'
+        """
+        params = dict(
+            per_page=100,
+        )
+
+        if self.token:
+            params['access_token'] = self.token
+
+        params.update(kwargs)
+
+        def get_while_next(url):
+            print 'GET:', url
+            response = get(
+                url,
+                params=params,
+                timeout=current_app.config['TIMEOUT'],
+            )
+
+            if not response.ok:
+                raise GitHubApiError(response)
+
+            data = anyjson.deserialize(response.content)
+            for item in data:
+                yield item
+
+            if 'link' in response.headers:
+                link = response.headers['link']
+                match = re.search(r'.*<(.*)>; rel="next".*', link)
+                if match is not None:
+                    for item in get_while_next(match.group(1)):
+                        yield item
+
+
+        for item in get_while_next(
+                urljoin(
+                    current_app.config['GITHUB_API_URL'],
+                    resource
+                )
+            ):
+            yield item
+

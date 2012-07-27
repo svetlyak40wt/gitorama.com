@@ -1,13 +1,13 @@
 .*.swp
 *.pyc
-env
+/env
 *.egg-info
 .vim/ide.session
 pip-log.txt
-gitorama/bootstrap/
-gitorama/static/.webassets-cache/
+/gitorama/static/.webassets-cache/
 *.log
 .vagrant
 /Vagrantfile
-/configs/package.box
+/configs/*.box
 /dump
+/gitorama/bootstrap
