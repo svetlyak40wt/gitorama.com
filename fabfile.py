@@ -102,7 +102,14 @@ def deploy():
     # npm install -g less
     # npm install -g coffee-script
     upstart_ensure('nginx')
+
+    migrate()
     restart()
+
+
+def migrate():
+    with cd(env.project_dir):
+        run('SETTINGS=gitorama.settings.production env/bin/python manage.py migrate')
 
 
 def quick_deploy():
