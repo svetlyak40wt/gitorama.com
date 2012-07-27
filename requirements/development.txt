@@ -5,3 +5,4 @@ pdbpp==0.7.2
 flask-debugtoolbar==0.7.1
 Fabric==1.4.3
 git+git://github.com/svetlyak40wt/fabricant.git
+git+git://github.com/svetlyak40wt/gitflow.git
