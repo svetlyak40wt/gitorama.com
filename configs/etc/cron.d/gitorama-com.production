@@ -1,4 +1,4 @@
 MAILTO=svetlyak.40wt@gmail.com
 
 # update stats every 15 minutes
-*/15 * * * * art (cd /home/art/projects/gitorama.com && ./manage.py push_processes)
+*/15 * * * * art (cd /home/art/projects/gitorama.com && SETTINGS=gitorama.settings.production env/bin/python manage.py push_processes)
