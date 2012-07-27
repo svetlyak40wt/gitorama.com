@@ -7,5 +7,6 @@ from gitorama import core
 
 args = parse_args()
 setup_redis(args)
-w = Worker([Queue()])
+queue = Queue()
+w = Worker([queue])
 w.work(burst=args.burst)

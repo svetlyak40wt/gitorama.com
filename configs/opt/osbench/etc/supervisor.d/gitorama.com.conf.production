@@ -6,6 +6,13 @@ autorestart = true
 redirect_stderr = true
 stdout_logfile = /home/art/log/supervisord/gitorama.com.log
 
+[program:worker.gitorama.com]
+user = art
+command = /home/art/projects/gitorama.com/env/bin/python /home/art/projects/gitorama.com/worker.py
+environment = SETTINGS="gitorama.settings.production"
+autorestart = true
+redirect_stderr = true
+stdout_logfile = /home/art/log/supervisord/worker.gitorama.com.log
 
 [program:gitorama.mongo1]
 user = mongodb
