@@ -43,6 +43,13 @@ logging.basicConfig(filename=app.config['LOG_FILE'], level=logging.DEBUG)
 
 if app.config.get('ENVIRONMENT') == 'production':
     mail_handler = logging.handlers.SMTPHandler(
+        ('localhost', '25'),
+        'server-error@gitorama.com',
+        ['svetlyak.40wt@gmail.com'],
+        'gitorama.com ERROR',
+    )
+elif app.config.get('ENVIRONMENT') == 'testing':
+    mail_handler = logging.handlers.SMTPHandler(
         ('mailtrap.io', '2525'),
         'server-error@gitorama.com',
         ['svetlyak.40wt@gmail.com'],
