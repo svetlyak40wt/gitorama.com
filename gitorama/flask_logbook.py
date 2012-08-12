@@ -8,10 +8,15 @@ from flask import _request_ctx_stack
 
 
 def create_logger(app):
+    if app.config.get('ENVIRONMENT') == 'production':
+        server_addr = ('localhost', 25)
+    else:
+        server_addr = ('localhost', 2525)
+
     mail_handler = logbook.MailHandler(
         'server-error@gitorama.com',
         ['svetlyak.40wt@gmail.com'],
-        server_addr=('localhost', 2525),
+        server_addr=server_addr,
         level='DEBUG',
         format_string=u'''Subject: ERROR at gitorama.com
 
