@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from fabricant import *
 
 env.project = 'gitorama.com'
@@ -38,7 +39,10 @@ def ensure_mongo():
         sudo("apt-get --yes update")
         package_ensure(['mongodb-10gen'])
 
-    upstart_ensure('mongodb')
+    if env.environment == 'production':
+        restart('gitorama.mongo:')
+    else:
+        upstart_ensure('mongodb')
 
 
 def make_install(
@@ -126,21 +130,21 @@ def runserver():
         local('env/bin/python app.py')
 
 
-def sctl(command):
+def sctl(command, program=None):
     require('project', provided_by=['dev', 'production'])
-    vars = dict(command=command, project=env.project)
-    run('supervisorctl %(command)s %(project)s' % vars)
+    vars = dict(command=command, program=env.project if program is None else program)
+    run('supervisorctl %(command)s %(program)s' % vars)
 
 
-def restart():
-    sctl('restart')
+def restart(program=None):
+    sctl('restart', program)
 
-def stop():
-    sctl('stop')
+def stop(program=None):
+    sctl('stop', program)
 
-def start():
-    sctl('start')
+def start(program=None):
+    sctl('start', program)
 
-def status():
-    sctl('status')
+def status(program=None):
+    sctl('status', program)
 
