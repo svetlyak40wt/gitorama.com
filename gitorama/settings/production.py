@@ -1,5 +1,7 @@
 from .default import *
 
+ENVIRONMENT = 'production'
+
 OAUTH_AUTHORIZE_URL = 'https://github.com/login/oauth/authorize'
 OAUTH_ACCESS_TOKEN_URL = 'https://github.com/login/oauth/access_token'
 OAUTH_CLIENT_ID = 'b1c68251f690bb495097'
