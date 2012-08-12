@@ -1,10 +1,10 @@
 -f http://pypi.svetlyak.ru
 
 -e .
--e git+git://github.com/andymccurdy/redis-py.git#egg=redis
+-e git+git://github.com/andymccurdy/redis-py.git@b82bee8578a6380527b579948e366ec542685f93#egg=redis
+-e git+git://github.com/mitsuhiko/flask.git@50dc2403526c5c5c67577767b05eb81e8fab0877#egg=Flask
 
 Werkzeug==0.8.2
-Flask==0.8
 Flask-Script==0.3.1
 Flask-Mail==0.6.1
 
@@ -15,8 +15,12 @@ Flask-Assets==0.7
 Flask-WTF==0.6
 jsmin==2.0.2
 
+-e git+git://github.com/mitsuhiko/logbook.git@d5aab55d833073056a8b249d6d4c1aae4f6cbfb5#egg=Logbook
+-e git+git://github.com/nvie/rq.git@9bfd686be3758c1e4c123326a4c3964ea0785ac0#egg=rq
+
 requests==0.10.1
 pymongo==2.1.1
 anyjson==0.3.1
-rq==0.1.2
 pytz==2012c
+# for unique request ids
+uuid==1.30

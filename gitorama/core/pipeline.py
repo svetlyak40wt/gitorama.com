@@ -30,9 +30,7 @@ def job(list_getter):
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
-            from gitorama import app
-            with app.test_request_context():
-                return func(*args, **kwargs)
+            return func(*args, **kwargs)
 
         processor.register(list_getter, wrapper)
         return wrapper

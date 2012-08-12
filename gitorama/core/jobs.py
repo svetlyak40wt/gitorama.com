@@ -63,5 +63,9 @@ def update_user(login):
 
 @job(lambda db: [1])
 def log_error(number):
-    logging.getLogger('blah').error('Some error from job')
+    logger = logging.getLogger('blah')
+    logger.debug('Some debug message')
+    logger.info('Some info message')
+    logger.warning('Some warning message')
+    raise RuntimeError('Some error from job')
 

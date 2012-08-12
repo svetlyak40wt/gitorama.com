@@ -1,6 +1,7 @@
 import datetime
 
 DEBUG = False
+PROPAGATE_EXCEPTIONS = False
 
 GITHUB_API_URL = 'https://api.github.com'
 TIMEOUT = 5
