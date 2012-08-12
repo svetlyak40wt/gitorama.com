@@ -112,8 +112,10 @@ def deploy():
 
 
 def migrate():
-    with cd(env.project_dir):
-        run('SETTINGS=gitorama.settings.production env/bin/python manage.py migrate')
+    # TODO сделать так, чтобы команда ожидала всех нод кластера
+    pass
+    #with cd(env.project_dir):
+    #    run('SETTINGS=gitorama.settings.production env/bin/python manage.py migrate')
 
 
 def quick_deploy():
