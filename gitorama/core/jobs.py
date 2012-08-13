@@ -61,11 +61,11 @@ def update_user(login):
     g.db.user_stats.save(stats)
 
 
-@job(lambda db: [1])
-def log_error(number):
-    logger = logging.getLogger('blah')
-    logger.debug('Some debug message')
-    logger.info('Some info message')
-    logger.warning('Some warning message')
-    raise RuntimeError('Some error from job')
-
+#@job(lambda db: [1])
+#def log_error(number):
+#    logger = logging.getLogger('blah')
+#    logger.debug('Some debug message')
+#    logger.info('Some info message')
+#    logger.warning('Some warning message')
+#    raise RuntimeError('Some error from job')
+#
