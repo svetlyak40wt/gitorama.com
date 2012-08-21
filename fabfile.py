@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import time
+
 from fabricant import *
 
 env.project = 'gitorama.com'
