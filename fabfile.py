@@ -112,10 +112,28 @@ def deploy():
 
 
 def migrate():
-    # TODO сделать так, чтобы команда ожидала всех нод кластера
-    pass
-    #with cd(env.project_dir):
-    #    run('SETTINGS=gitorama.settings.production env/bin/python manage.py migrate')
+    tries = 10
+    # waiting for all mongo servers
+    with settings(warn_only=True):
+        while tries > 0:
+            result = run('SETTINGS=gitorama.settings.production env/bin/python manage.py is_all_mongos_are_up')
+            if result.return_code == 0:
+                break
+            tries -= 1
+            time.sleep(5)
+
+    with cd(env.project_dir):
+        run('SETTINGS=gitorama.settings.production env/bin/python manage.py migrate')
+
+
+def test_migration():
+    ensure_mongo()
+    migrate()
+
+
+def shell():
+    with cd(env.project_dir):
+        run('SETTINGS=gitorama.settings.production env/bin/python manage.py shell')
 
 
 def quick_deploy():
@@ -123,6 +141,7 @@ def quick_deploy():
     """
     _pull_sources()
     restart()
+    restart('worker.gitorama.com')
 
 
 def runserver():

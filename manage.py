@@ -81,6 +81,19 @@ def dbshell():
 
 
 @manager.command
+def is_all_mongos_are_up():
+    db = core.get_db()
+    result = db.connection.admin.command({'isMaster': 1})
+
+    if 'setName' in result:
+        result = db.connection.admin.command('replSetGetStatus')
+        for member in result['members']:
+            if member['state'] not in [1, 2, 7]:
+                return 1
+    return 0
+
+
+@manager.command
 def migrate():
     from gitorama import migrations
     migrations.migrate()
