@@ -114,17 +114,17 @@ def deploy():
 
 
 def migrate():
-    tries = 10
-    # waiting for all mongo servers
-    with settings(warn_only=True):
-        while tries > 0:
-            result = run('SETTINGS=gitorama.settings.production env/bin/python manage.py is_all_mongos_are_up')
-            if result.return_code == 0:
-                break
-            tries -= 1
-            time.sleep(5)
-
     with cd(env.project_dir):
+        tries = 10
+        # waiting for all mongo servers
+        with settings(warn_only=True):
+            while tries > 0:
+                result = run('SETTINGS=gitorama.settings.production env/bin/python manage.py is_all_mongos_are_up')
+                if result.return_code == 0:
+                    break
+                tries -= 1
+                time.sleep(5)
+
         run('SETTINGS=gitorama.settings.production env/bin/python manage.py migrate')
 
 
