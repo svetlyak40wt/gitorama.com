@@ -76,7 +76,10 @@ def test_logging():
 def dbshell():
     db = core.get_db()
     result = db.connection.admin.command({'isMaster': 1})
-    host, port = result['primary'].split(':')
+    if 'primary' in result:
+        host, port = result['primary'].split(':')
+    else:
+        host, port = 'localhost', 27017
     subprocess.call('mongo --host "{host}" --port "{port}" "{db.name}"'.format(**locals()), shell=True)
 
 
@@ -92,6 +95,11 @@ def is_all_mongos_are_up():
                 return 1
     return 0
 
+
+@manager.command
+def build_digest():
+    from gitorama.features.digest.jobs import update_daily_digest
+    update_daily_digest('svetlyak40wt')
 
 @manager.command
 def migrate():

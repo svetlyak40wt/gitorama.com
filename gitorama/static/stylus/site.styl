@@ -1,0 +1,119 @@
+@import 'nib'
+
+global-reset()
+
+/* different defaults */
+body
+    font-family "Lucida Grande", Helvetica, Sans-Serif
+
+base-font-size = 14px
+base-line-height = 20px
+
+/* For IE */
+body
+    font-size (base-font-size / 16 * 100)%
+
+/* For other browsers */
+html > body
+    font-size base-font-size
+
+
+navbar_color = #FFF
+navbar-height = base-line-height * 2
+
+.navbar
+    width 100%
+    height navbar-height
+    font-size base-font-size * 1.5
+    line-height navbar-height
+
+    position fixed
+    background linear-gradient(20px top, navbar_color, darken(navbar_color, 10%))
+    box-shadow(0 1px 3px rgba(0, 0, 0, .25)\, inset 0 -1px 0 rgba(0, 0, 0, .1))
+
+    &__item
+        float left
+        display block
+        margin-left 10px
+        padding 0 8px
+
+        a
+            color darken(navbar_color, 80%)
+            text-decoration none
+
+        &_brand
+            font-weight bold
+            width 120px
+
+        &_login-form
+            float right
+
+        &_active
+            a
+                color navbar_color
+            background linear-gradient(20px top, darken(navbar_color, 10%), darken(navbar_color, 30%))
+
+
+.content
+    clear both
+    padding-top navbar-height + base-line-height
+    min-height 400px
+    padding-left 120px
+    padding-right 120px
+
+.footer
+    height base-line-height
+    font-size (base-font-size * 0.7)
+    line-height base-line-height
+    background linear-gradient(20px top, navbar_color, darken(navbar_color, 10%))
+    box-shadow(0 -1px 3px rgba(0, 0, 0, .25)\, inset 0 -1px 0 rgba(0, 0, 0, .1))
+    text-align center
+
+.avatar
+    &__small
+        width 16px
+        height 16px
+
+typography()
+    line-height base-line-height
+
+    h1
+        font-size base-font-size * 2
+        line-height base-line-height * 2
+        margin-bottom base-line-height
+
+    h2
+        font-size base-font-size
+        font-weight bold
+        margin-bottom base-line-height
+
+    p
+        margin-bottom base-line-height
+
+    ul
+        list-style-type disc
+
+    ol
+        list-style-type decimal
+
+    ul, ol
+        list-style-position inside
+        margin-left base-line-height
+
+    ul, ol, dl
+        margin-bottom base-line-height
+
+.text
+    typography()
+
+.content
+    typography()
+
+.promo-block
+    typography()
+
+.digest
+    &__repository-name, &__repository-events
+        &_hidden
+            display none
+

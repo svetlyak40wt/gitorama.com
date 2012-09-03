@@ -4,38 +4,41 @@
         <meta charset="utf-8">
         <title>Gitorama</title>
         <link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon" />
+
         {% assets "css_all" %}
+            <!--link rel="stylesheet" href="{{ ASSET_URL }}" /-->
+        {% endassets %}
+        {% assets "css_stylus" %}
             <link rel="stylesheet" href="{{ ASSET_URL }}" />
         {% endassets %}
+
+        <script type="text/javascript" src="http://yandex.st/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="/static/js/highcharts.js"></script>
         {% assets "js_all" %}
             <script type="text/javascript" src="{{ ASSET_URL }}"></script>
         {% endassets %}
-        <script type="text/javascript" src="http://yandex.st/jquery/1.7.2/jquery.min.js"></script>
-        <script type="text/javascript" src="/static/js/highcharts.js"></script>
     </head>
     <body>
-        <div class="navbar navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container">
-                    <a class="brand" href="/">Gitorama!</a>
-                    <div class="nav-collapse">
-                        <ul class="nav">
-                            <li class="active"><a href="/">About</a></li>
-                            <li><a href="{{ url_for('forkfeed.index') }}">Forkfeed</a></li>
-                            <li><a href="{{ url_for('relations.index') }}">Relations</a></li>
-                        </ul>
+        <ul class="navbar">
+            <li class="navbar__item navbar__item_brand"><a href="/">Gitorama!</a></li>
+            <li class="navbar__item navbar__item_active"><a href="/">Home</a></li>
+            <!--li class="navbar__item"><a href="/blocks">Blocks</a></li>
+            <li class="navbar__item"><a href="{{ url_for('forkfeed.index') }}">Forkfeed</a></li>
+            <li class="navbar__item"><a href="{{ url_for('relations.index') }}">Relations</a></li-->
 
-                        {% if request.user %}
-                            <form action="{{ url_for('auth.logout') }}" method="POST" class="login-form pull-right">
-                                <img src="{{ request.user.avatar_url }}" width="20px" height="20px"/>{{ request.user.login }} <input type="submit" value="Log Out" class="btn danger"/>
-                            </form>
-                        {% endif %}
-                    </div><!--/.nav-collapse -->
-                </div>
-            </div>
+            {% if request.user %}
+            <li class="navbar__item navbar__item_login-form">
+                <form action="{{ url_for('auth.logout') }}" method="POST" class="login-form">
+                    <img src="{{ request.user.avatar_url }}" width="20px" height="20px"/>{{ request.user.login }} <input type="submit" value="Log Out" class="btn danger"/>
+                </form>
+            </li>
+            {% endif %}
+        </ul>
+
+        <div class="content">
             {% with messages=get_flashed_messages(with_categories=true) %}
               {% if messages %}
-                <ul class=flashes>
+                <ul class="messages">
                 {% for category, message in messages %}
                   <li class="{{ category }}">{{ message|safe }}</li>
                 {% endfor %}
@@ -43,16 +46,11 @@
               {% endif %}
             {% endwith %}
 
-        </div>
-
-        <div class="container">
             {% block content %}
             {% endblock %}
         </div>
 
-        <footer>
-            <p>&copy; 40 Ants 2011-2012</p>
-        </footer>
+        <div class="footer">&copy; 40 Ants 2011-2012</div>
     </body>
 </html>
 

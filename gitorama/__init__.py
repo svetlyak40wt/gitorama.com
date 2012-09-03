@@ -36,8 +36,17 @@ assets = Environment(app)
 assets.cache = False
 assets.manifest = 'file:'
 
+import envoy
+def stylus(_in, out, **kwargs):
+    result = envoy.run('stylus --include /home/vagrant/osbench/workbench/stylus-nib/0.8.1/node_modules/nib/lib', data=_in.read())
+    out.write(result.std_out)
+
 css = Bundle('less/site.less', filters=['less'], output='css/site.css')
+css_stylus = Bundle('stylus/site.styl', filters=[stylus], output='css/stylus.css')
+
 assets.register('css_all', css)
+assets.register('css_stylus', css_stylus)
+
 js = Bundle('coffee/site.coffee', filters=['coffeescript'], output='js/site.js')
 assets.register('js_all', js)
 
