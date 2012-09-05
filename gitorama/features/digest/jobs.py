@@ -19,21 +19,20 @@ def fetch_user_events(login):
     user = db.users.find_one({'login': login})
 
     # calculating time of last saved event
-    last_item= list(db.received_events.find({'gitorama.login': user['login']}).sort([('created_at', -1)])[:1])
+    last_item = list(db.received_events.find({'gitorama.login': user['login']}).sort([('created_at', -1)])[:1])
     if last_item:
-        last_item = last_item[0]['created_at']
+        last_item = last_item[0]['id'] # this is a GitHub's event id
     else:
-        last_item = times.now() - datetime.timedelta(30)
+        last_item = None
 
     gh = net.GitHub(token=user['gitorama']['token'])
     for event in gh.get_iter('/users/{0}/received_events'.format(user['login']), per_page=30):
-        created_at = times.to_universal(event['created_at'])
-        if created_at < last_item:
+        if event['id'] == last_item:
             # don't fetch more than needed
             # this item already saved
             break
 
-        event['created_at'] = created_at
+        event['created_at'] = times.to_universal(event['created_at'])
         event['gitorama'] = {'login': user['login']}
         db.received_events.save(event)
 
