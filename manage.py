@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import times
 import subprocess
 import logging
-import datetime
 
 # to activate jobs
 import gitorama.features.digest.jobs
@@ -13,7 +11,8 @@ from flask.ext.script import Manager
 from flask.ext.assets import ManageAssets
 from gitorama import core, app
 from gitorama.features import forkfeed, relations
-from time import sleep
+from time import sleep, time
+from socket import socket
 
 from rq import Queue, use_connection
 from gitorama.core.jobs import update_user
@@ -41,6 +40,38 @@ def show_stats():
             key,
             core.cache.get(key)
         )
+
+@manager.command
+def send_stats_to_graphite():
+    CARBON_SERVER = '127.0.0.1'
+    CARBON_PORT = 2003
+
+    sock = socket()
+
+    try:
+      sock.connect((CARBON_SERVER, CARBON_PORT))
+    except:
+      print 'Couldn\'t connect to %(server)s on port %(port)d, is carbon-agent.py running?' % { 'server':CARBON_SERVER, 'port':CARBON_PORT }
+      return 1
+
+    now = time()
+    lines = []
+
+    db = core.get_db()
+    stats = {
+        'rate-limit': lambda: core.cache.get(key) or 0,
+        'num-users': lambda: db.users.find().count(),
+    }
+
+    for key, getter in stats.items():
+        lines.append('gitorama.{key} {value} {now}'.format(
+            key=key,
+            value=getter(),
+            now=now
+        ))
+
+        message = '\n'.join(lines) + '\n' #all lines must end in a newline
+        sock.sendall(message)
 
 
 @manager.command
