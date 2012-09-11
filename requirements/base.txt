@@ -20,7 +20,7 @@ Flask-WTF==0.6
 jsmin==2.0.2
 
 -e git+git://github.com/mitsuhiko/logbook.git@d5aab55d833073056a8b249d6d4c1aae4f6cbfb5#egg=Logbook
--e git+git://github.com/nvie/rq.git@9bfd686be3758c1e4c123326a4c3964ea0785ac0#egg=rq
+-e git+git://github.com/nvie/rq.git@221dd8a0045ceff2e08161f3aa348466c63de47d#egg=rq
 
 requests==0.10.1
 pymongo==2.1.1

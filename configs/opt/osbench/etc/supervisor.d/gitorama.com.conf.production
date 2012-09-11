@@ -14,6 +14,13 @@ autorestart = true
 redirect_stderr = true
 stdout_logfile = /home/art/log/supervisord/worker.gitorama.com.log
 
+[program:rq.gitorama.com]
+user = art
+command = /home/art/projects/gitorama.com/env/bin/rq-dashboard
+autorestart = true
+redirect_stderr = true
+stdout_logfile = /home/art/log/supervisord/rq.gitorama.com.log
+
 [program:gitorama.mongo1]
 user = mongodb
 command = /usr/bin/mongod --config /home/art/projects/gitorama.com/configs/mongo/production/rs1.conf

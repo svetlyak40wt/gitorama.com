@@ -4,6 +4,7 @@ from flask import _request_ctx_stack
 
 from rq import Worker, Queue
 from rq.scripts.rqworker import setup_redis, parse_args
+from rq.scripts import setup_default_arguments
 
 from gitorama import app
 from gitorama.flask_logbook import create_logger
@@ -17,6 +18,7 @@ class CustomWorker(Worker):
                 super(CustomWorker, self).perform_job(job)
 
 args = parse_args()
+setup_default_arguments(args, {})
 setup_redis(args)
 queue = Queue()
 w = CustomWorker([queue])
