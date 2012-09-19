@@ -19,9 +19,9 @@ def track_ratelimit(func):
 
             limit = response.headers.get('x-ratelimit-limit')
             if limit is not None:
-                stats.save('github.rate-limit.current', limit)
-                stats.save('github.rate-limit.remaining', remaining)
-                stats.save('github.rate-limit.quota', float(remaining) / float(limit))
+                stats.save('avg:github.rate-limit.current', limit)
+                stats.save('avg:github.rate-limit.remaining', remaining)
+                stats.save('avg:github.rate-limit.quota', float(remaining) / float(limit))
         return response
     return wrapper
 
