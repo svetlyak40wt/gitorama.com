@@ -1,6 +1,8 @@
 import datetime
 import os
 
+ENVIRONMENT = 'development'
+
 DEBUG = False
 PROPAGATE_EXCEPTIONS = False
 
