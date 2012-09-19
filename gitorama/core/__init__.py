@@ -98,11 +98,13 @@ def before_request():
     if request.path.startswith('/static/'):
         return
 
-    g.db = get_db()
+    request.app = current_app
+
+    db = get_db()
 
     token = session.get('token')
     if token is not None:
-        user = g.db.users.find_one({'gitorama.token': token})
+        user = db.users.find_one({'gitorama.token': token})
 
         if user is None:
             # this is either a new user, nor he is already
@@ -119,7 +121,7 @@ def before_request():
             )
             user = anyjson.deserialize(response.content)
 
-            existing_user = g.db.users.find_one({'login': user['login']})
+            existing_user = db.users.find_one({'login': user['login']})
             if existing_user is None:
                 user['gitorama'] = dict(
                     registered_at=datetime.datetime.utcnow(),
@@ -130,7 +132,7 @@ def before_request():
                 existing_user['gitorama']['token'] = token
                 user = existing_user
 
-            g.db.users.save(user)
+            db.users.save(user)
 
         request.user = user
 
@@ -142,12 +144,6 @@ def before_request():
                 ),
                 'error'
             )
-
-
-@bp.teardown_request
-def teardown_request(exception):
-    if hasattr(g, 'db'):
-        g.db.connection.close()
 
 
 def get_db():
