@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+
 import collectd
 import time
 import random
@@ -5,7 +7,7 @@ import redis
 import logging
 from functools import wraps
 
-from gitorama.core.stats import stats
+from gitorama.core.stats import Stats
 
 
 class Plugin(object):
@@ -78,11 +80,24 @@ class GitoramaStats(Plugin):
     host = 'localhost'
     port = 6379
 
+    def __init__(self):
+        super(GitoramaStats, self).__init__()
+        self._db = None
+        self.stats = Stats(self.get_redis)
+
+    def get_redis(self):
+        if self._db is None:
+            self._db = redis.StrictRedis(
+                host=self.host,
+                port=self.port,
+            )
+        return self._db
+
     def on_read(self):
-        values = stats.get_all_values()
+        values = self.stats.get_all_values()
         for key, value in values.items():
             self.dispatch_value(key, value, 'gauge')
 
 
-plugin = GitoPlugin()
+plugin = GitoramaStats()
 
