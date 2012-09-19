@@ -2,7 +2,6 @@ import re
 import anyjson
 import requests
 
-from .cache import cache
 from functools import wraps
 from urlparse import urljoin
 from flask import current_app
@@ -11,12 +10,18 @@ from flask import current_app
 def track_ratelimit(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
+        from .stats import stats
+
         response = func(*args, **kwargs)
         remaining = response.headers.get('x-ratelimit-remaining')
         if remaining is not None:
+            stats.incr('github.api.calls.' + func.__name__)
+
             limit = response.headers.get('x-ratelimit-limit')
             if limit is not None:
-                cache.set('rate-limit', float(remaining) / float(limit), 3600)
+                stats.save('github.rate-limit.current', limit)
+                stats.save('github.rate-limit.remaining', remaining)
+                stats.save('github.rate-limit.quota', float(remaining) / float(limit))
         return response
     return wrapper
 

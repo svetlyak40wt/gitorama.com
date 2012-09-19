@@ -7,3 +7,7 @@ Fabric==1.4.3
 -e git+git://github.com/sebastien/cuisine.git@04dd19fa39c61d4893d294fdd7014a4b08d734d6#egg=cuisine
 git+git://github.com/svetlyak40wt/fabricant.git
 git+git://github.com/svetlyak40wt/gitflow.git
+git+git://github.com/svetlyak40wt/nose-notify-tmux.git
+git+git://github.com/svetlyak40wt/tdaemon.git@develop
+nose-progressive
+

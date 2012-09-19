@@ -1,6 +1,6 @@
 -f http://pypi.svetlyak.ru
 
--e .
+#-e .
 -e git+git://github.com/andymccurdy/redis-py.git@b82bee8578a6380527b579948e366ec542685f93#egg=redis
 -e git+git://github.com/mitsuhiko/flask.git@50dc2403526c5c5c67577767b05eb81e8fab0877#egg=Flask
 -e git+git://github.com/svetlyak40wt/flask-script.git#egg=Flask-Script
@@ -11,7 +11,7 @@ Flask-Mail==0.6.1
 
 # My Fork from: http://github.com/svetlyak40wt/flask-cache/ was already merged to upstream
 #Flask-Cache==0.4.0-art1
--e git+git://github.com/thadeusb/flask-cache.git@9abd8838c77f0bfacd0b2dd5798246b030f8dc6d#egg=Flask-Cache
+-e git+git://github.com/svetlyak40wt/flask-cache.git@master#egg=Flask-Cache
 #Flask-Assets==0.7
 #-e git+git://github.com/miracle2k/flask-assets.git
 -e git+git://github.com/miracle2k/webassets.git@ef4d11e24dceb8f7a60d2987b57d3956c4224caf#egg=webassets

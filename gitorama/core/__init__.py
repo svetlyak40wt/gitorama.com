@@ -2,6 +2,7 @@ import anyjson
 import datetime
 import pymongo
 import logging
+import redis
 
 from urlparse import urljoin
 from hashlib import md5
@@ -13,6 +14,7 @@ from flask import (
     session, g, current_app,
     flash,
     url_for,
+    _app_ctx_stack,
 )
 
 from . import net
@@ -158,4 +160,15 @@ def get_db():
     conn = pymongo.Connection(**options)
     return conn.gitorama
 
+
+def get_redis():
+    ctx = _app_ctx_stack.top
+    db = getattr(ctx, '_redis', None)
+    if db is None:
+        db = redis.StrictRedis(
+            host=ctx.app.config['REDIS_HOST'],
+            port=int(ctx.app.config['REDIS_PORT']),
+        )
+        ctx._redis = db
+    return db
 
