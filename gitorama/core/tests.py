@@ -13,7 +13,7 @@ def set_time(value):
 
 
 def test_stats_sum():
-    stats = Stats(get_time)
+    stats = Stats(db=get_redis, time=get_time)
     with app.app_context():
         drop_redis_keys()
 
@@ -26,7 +26,7 @@ def test_stats_sum():
 
 
 def test_stats_avg():
-    stats = Stats(get_time)
+    stats = Stats(db=get_redis, time=get_time)
     with app.app_context():
         drop_redis_keys()
 
@@ -39,7 +39,7 @@ def test_stats_avg():
 
 
 def test_stats_periods():
-    stats = Stats(get_time)
+    stats = Stats(db=get_redis, time=get_time)
     with app.app_context():
         drop_redis_keys()
 
@@ -55,7 +55,7 @@ def test_stats_periods():
 
 
 def test_stats_on_absent_key():
-    stats = Stats(get_time)
+    stats = Stats(db=get_redis, time=get_time)
     with app.app_context():
         drop_redis_keys()
         eq_(stats.sum('some.absent.value'), 0)
@@ -63,7 +63,7 @@ def test_stats_on_absent_key():
 
 
 def test_stats_get_all_keys():
-    stats = Stats(get_time)
+    stats = Stats(db=get_redis, time=get_time)
     with app.app_context():
         drop_redis_keys()
 
