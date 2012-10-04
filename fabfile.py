@@ -95,7 +95,6 @@ def deploy():
     package_ensure([
         'nginx',
         'redis-server',
-        'python-redis',
         'g++',
     ])
 
