@@ -46,7 +46,7 @@ def index():
                         ))
 
                 avatars = [
-                    '<img class="avatar avatar__small" src="http://www.gravatar.com/avatar/{gravatar_id}?s=16&d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" title="{name}"/>'.format(
+                    u'<img class="avatar avatar__small" src="http://www.gravatar.com/avatar/{gravatar_id}?s=16&d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" title="{name}"/>'.format(
                         gravatar_id=gravatar_id,
                         name=name,
                     )
