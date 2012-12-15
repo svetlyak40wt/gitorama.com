@@ -1,0 +1,5 @@
+loglevel warning
+pidfile {pid_file}
+port {port}
+logfile {log_file}
+dir {data_dir}

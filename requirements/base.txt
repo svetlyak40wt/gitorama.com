@@ -1,22 +1,27 @@
 -f http://pypi.svetlyak.ru
 
--e .
--e git+git://github.com/andymccurdy/redis-py.git#egg=redis
+#-e .
+-e git+git://github.com/andymccurdy/redis-py.git@b82bee8578a6380527b579948e366ec542685f93#egg=redis
+-e git+git://github.com/mitsuhiko/flask.git@50dc2403526c5c5c67577767b05eb81e8fab0877#egg=Flask
+-e git+git://github.com/kennethreitz/envoy.git@32a536041f93179fe596cb65e06f0017c6ba147d#egg=envoy
+
+-e git+git://github.com/miracle2k/webassets.git@ef4d11e24dceb8f7a60d2987b57d3956c4224caf#egg=webassets
+
+-e git+git://github.com/svetlyak40wt/flask-script.git#egg=Flask-Script
+-e git+git://github.com/svetlyak40wt/flask-cache.git@master#egg=Flask-Cache
+-e git+git://github.com/svetlyak40wt/flask-assets.git#egg=Flask-Assets
+-e git+git://github.com/ajford/flask-wtf.git@6ab31d31d83cc1d30b447da35d0b38d812cd0972#egg=Flask-WTF
+-e git+git://github.com/mattupstate/flask-mail.git@7c58019a57779c2bc55ea2419befa0ceee3fd4be#egg=Flask-Mail
+
+
+-e git+git://github.com/mitsuhiko/logbook.git@d5aab55d833073056a8b249d6d4c1aae4f6cbfb5#egg=Logbook
+-e git+git://github.com/nvie/rq.git@221dd8a0045ceff2e08161f3aa348466c63de47d#egg=rq
 
 Werkzeug==0.8.2
-Flask==0.8
-Flask-Script==0.3.1
-Flask-Mail==0.6.1
-
-# My Fork from: http://github.com/svetlyak40wt/flask-cache/ was already merged to upstream
-#Flask-Cache==0.4.0-art1
--e git+git://github.com/thadeusb/flask-cache.git@9abd8838c77f0bfacd0b2dd5798246b030f8dc6d#egg=Flask-Cache
-Flask-Assets==0.6.2
-Flask-WTF==0.6
 jsmin==2.0.2
-
-requests==0.9.3
+requests==0.10.1
 pymongo==2.1.1
 anyjson==0.3.1
-rq==0.1.2
 pytz==2012c
+# for unique request ids
+uuid==1.30

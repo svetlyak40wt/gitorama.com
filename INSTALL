@@ -6,3 +6,9 @@ vagrant ssh
 python virtualenv.py env
 
 env/bin/pip install -r requirements/development.txt
+
+# сохранить базу
+mongodump --db gitorama
+
+# восстановить базу
+mongorestore

@@ -6,6 +6,20 @@ autorestart = true
 redirect_stderr = true
 stdout_logfile = /home/art/log/supervisord/gitorama.com.log
 
+[program:worker.gitorama.com]
+user = art
+command = /home/art/projects/gitorama.com/env/bin/python /home/art/projects/gitorama.com/worker.py
+environment = SETTINGS="gitorama.settings.production"
+autorestart = true
+redirect_stderr = true
+stdout_logfile = /home/art/log/supervisord/worker.gitorama.com.log
+
+[program:rq.gitorama.com]
+user = art
+command = /home/art/projects/gitorama.com/env/bin/rq-dashboard
+autorestart = true
+redirect_stderr = true
+stdout_logfile = /home/art/log/supervisord/rq.gitorama.com.log
 
 [program:gitorama.mongo1]
 user = mongodb
@@ -24,3 +38,6 @@ user = mongodb
 command = /usr/bin/mongod --config /home/art/projects/gitorama.com/configs/mongo/production/rs3.conf
 redirect_stderr = true
 stdout_logfile = /home/art/log/supervisord/gitorama-mongodb-rs3.log
+
+[group:gitorama.mongo]
+programs = gitorama.mongo1,gitorama.mongo2,gitorama.mongo3

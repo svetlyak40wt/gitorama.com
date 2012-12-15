@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+import time
+
 from fabricant import *
 
 env.project = 'gitorama.com'
@@ -12,6 +15,7 @@ def dev():
 
 def production():
     env.hosts = ['people']
+    env.user = 'art'
     env.environment = 'production'
     env.project_dir = '/home/art/projects/gitorama.com'
     env.repository = '~/git-private/gitorama.com.git'
@@ -37,7 +41,10 @@ def ensure_mongo():
         sudo("apt-get --yes update")
         package_ensure(['mongodb-10gen'])
 
-    upstart_ensure('mongodb')
+    if env.environment == 'production':
+        restart('gitorama.mongo:')
+    else:
+        upstart_ensure('mongodb')
 
 
 def make_install(
@@ -101,7 +108,34 @@ def deploy():
     # npm install -g less
     # npm install -g coffee-script
     upstart_ensure('nginx')
+
+    migrate()
     restart()
+
+
+def migrate():
+    with cd(env.project_dir):
+        tries = 10
+        # waiting for all mongo servers
+        with settings(warn_only=True):
+            while tries > 0:
+                result = run('SETTINGS=gitorama.settings.production env/bin/python manage.py is_all_mongos_are_up')
+                if result.return_code == 0:
+                    break
+                tries -= 1
+                time.sleep(5)
+
+        run('SETTINGS=gitorama.settings.production env/bin/python manage.py migrate')
+
+
+def test_migration():
+    ensure_mongo()
+    migrate()
+
+
+def shell():
+    with cd(env.project_dir):
+        run('SETTINGS=gitorama.settings.production env/bin/python manage.py shell')
 
 
 def quick_deploy():
@@ -109,6 +143,7 @@ def quick_deploy():
     """
     _pull_sources()
     restart()
+    restart('worker.gitorama.com')
 
 
 def runserver():
@@ -118,21 +153,21 @@ def runserver():
         local('env/bin/python app.py')
 
 
-def sctl(command):
+def sctl(command, program=None):
     require('project', provided_by=['dev', 'production'])
-    vars = dict(command=command, project=env.project)
-    run('supervisorctl %(command)s %(project)s' % vars)
+    vars = dict(command=command, program=env.project if program is None else program)
+    run('supervisorctl %(command)s %(program)s' % vars)
 
 
-def restart():
-    sctl('restart')
+def restart(program=None):
+    sctl('restart', program)
 
-def stop():
-    sctl('stop')
+def stop(program=None):
+    sctl('stop', program)
 
-def start():
-    sctl('start')
+def start(program=None):
+    sctl('start', program)
 
-def status():
-    sctl('status')
+def status(program=None):
+    sctl('status', program)
 

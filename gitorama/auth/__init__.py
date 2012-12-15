@@ -12,7 +12,7 @@ from flask import (
     flash,
     g,
 )
-from flaskext.mail import Message
+from flask.ext.mail import Message
 
 from ..core import net
 from .forms import RegistrationForm, EmailValidationForm

@@ -1,0 +1,3 @@
+[submodule "gitorama/bootstrap"]
+	path = gitorama/bootstrap
+	url = git://github.com/twitter/bootstrap.git

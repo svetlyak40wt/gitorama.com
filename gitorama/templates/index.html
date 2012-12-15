@@ -2,19 +2,47 @@
 
 {% block content %}
     {% if not request.user %}
-        <h2>What Gitorama is? It is egocentric view on github!</h2>
-        <h3>It is:</h3>
-        <ul>
-            <li>yours personal digests;</li>
-            <li>yours archivements;</li>
-            <li>stats of yours projects;</li>
-            <li>and more…</li>
-        </ul>
 
-        <form action="{{ url_for('auth.login') }}" method="POST">
-            <p>Use your GitHub account to <input type="submit" value="Sign Up" class="btn primary"/> or <input type="submit" value="Sign In!" class="btn"/></p>
-        </form>
+        <div class="promo-block">
+            <h1>What Gitorama is? It is egocentric view on github!</h1>
+            <h2>It is:</h2>
+            <ul>
+                <li>yours personal digests;</li>
+                <li>yours archivements;</li>
+                <li>stats of yours projects;</li>
+                <li>and more…</li>
+            </ul>
+
+            <form action="{{ url_for('auth.login') }}" method="POST">
+                <p>Use your GitHub account to <input type="submit" value="Sign Up" class="btn primary"/> or <input type="submit" value="Sign In!" class="btn"/></p>
+            </form>
+        </div>
     {% else %}
-        <p class="big-centered-text">Right now we are aggregating content for you. We'll mail you when this process will be finished.</p>
+        {% if daily_digest %}
+            <div class="digest">
+                <h1 class="digest__header">Daily Digest</h1>
+                {% if daily_digest.repositories %}
+                    <h2 class="digest__subheader">Repositories</h2>
+                    <dl class="digest__repositories">
+                        {% for rep in daily_digest.repositories %}
+                            <dt class="digest__repository-name{% if loop.index > 5 %} digest__repository-name_hidden{% endif %}"><a href="http://github.com/{{rep.name}}">{{ rep.name }}</a></dt>
+                            <dd>
+                                <ul class="digest__repository-events{% if loop.index > 5 %} digest__repository-events_hidden{% endif %}">
+                                    {% for item in rep.events %}
+                                        <li>{{ item|safe }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </dd>
+                        {% endfor %}
+
+                        {% if daily_digest.repositories|length > 5 %}
+                            <p><a class="digest__show-more" href="#">show more</a></p>
+                        {% endif %}
+                    </dl>
+                {% endif %}
+            </div>
+        {% else %}
+            <p class="big-centered-text">Right now we are aggregating content for you. We'll mail you when this process will be finished.</p>
+        {% endif %}
     {% endif %}
 {% endblock %}

@@ -4,7 +4,7 @@ upstream gitorama_server {
 
 server {
     listen 80;
-    server_name gitorama.com new.gitorama.com;
+    server_name gitorama.com;
     access_log /home/art/log/nginx/gitorama.com.log;
 
     # path for static files
@@ -21,6 +21,36 @@ server {
         proxy_redirect off;
 
         proxy_pass   http://gitorama_server;
+    }
+}
+
+#################################
+## DASHBOARD for queues
+#################################
+
+upstream rq_dashboard {
+    server 127.0.0.1:9181 fail_timeout=0;
+}
+
+server {
+    listen 80;
+    server_name rq.gitorama.com;
+    access_log /home/art/log/nginx/rq-dashboard.log;
+
+    # path for static files
+    root /none;
+
+    location / {
+        # checks for static file, if not found proxy to app
+        try_files $uri @proxy_to_app;
+    }
+
+    location @proxy_to_app {
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+
+        proxy_pass   http://rq_dashboard;
     }
 }
 

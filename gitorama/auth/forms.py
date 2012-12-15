@@ -1,5 +1,5 @@
-from flaskext.wtf import Form, SelectField, Required, HiddenField
-from flaskext.wtf.html5 import EmailField
+from flask.ext.wtf import Form, SelectField, Required, HiddenField
+from flask.ext.wtf.html5 import EmailField
 import pytz
 
 class RegistrationForm(Form):

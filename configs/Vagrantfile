@@ -9,7 +9,7 @@ Vagrant::Config.run do |config|
     vm.name = "dev.gitorama.com"
   end
 
-  config.vm.network :hostonly, "192.168.10.20"
+  config.vm.network :hostonly, "192.168.100.2"
 
   config.vm.forward_port 8000, 8000
   config.vm.forward_port 27017, 27017

@@ -28,14 +28,8 @@ class Processor(object):
 
 def job(list_getter):
     def decorator(func):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            from gitorama import app
-            with app.test_request_context():
-                return func(*args, **kwargs)
-
-        processor.register(list_getter, wrapper)
-        return wrapper
+        processor.register(list_getter, func)
+        return func
     return decorator
 
 
