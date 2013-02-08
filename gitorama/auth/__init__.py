@@ -14,7 +14,7 @@ from flask import (
 )
 from flask.ext.mail import Message
 
-from ..core import net
+from ..core import net, get_db
 from .forms import RegistrationForm, EmailValidationForm
 
 
@@ -55,7 +55,8 @@ def auth_callback():
 
     token = result.get('access_token')
 
-    user = g.db.users.find_one({'gitorama.token': token})
+    db = get_db()
+    user = db.users.find_one({'gitorama.token': token})
     if user and not user.get('gitorama', {}).get('email'):
         response = redirect(url_for('auth.registration'))
     else:
@@ -77,7 +78,9 @@ def registration():
         request.user['gitorama']['unverified_email'] = form.email.data
         request.user['gitorama']['email_validation_token'] = hashlib.sha1(str(random.random())).hexdigest()
         request.user['gitorama']['timezone'] = form.timezone.data
-        g.db.users.save(request.user)
+
+        db = get_db()
+        db.users.save(request.user)
 
         send_validation_email()
 
@@ -87,7 +90,9 @@ def registration():
 @bp.route('/validation/<token>', methods=('GET', 'POST'))
 def validation(token):
     form = EmailValidationForm(token=token)
-    user = g.db.users.find_one({'gitorama.email_validation_token': token})
+
+    db = get_db()
+    user = db.users.find_one({'gitorama.email_validation_token': token})
     if not user:
         raise RuntimeError('invalid token')
 
@@ -95,7 +100,7 @@ def validation(token):
         user['gitorama']['email'] = user['gitorama']['unverified_email']
         del user['gitorama']['unverified_email']
         del user['gitorama']['email_validation_token']
-        g.db.users.save(user)
+        db.users.save(user)
 
         flash('Your account was activated. Thank you!')
         return redirect(url_for('core.index'))
