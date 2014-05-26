@@ -46,13 +46,13 @@ def index():
                         ))
 
                 avatars = [
-                    '<img class="avatar avatar__small" src="http://www.gravatar.com/avatar/{gravatar_id}?s=16&d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" title="{name}"/>'.format(
+                    u'<img class="avatar avatar__small" src="http://www.gravatar.com/avatar/{gravatar_id}?s=16&d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" title="{name}"/>'.format(
                         gravatar_id=gravatar_id,
                         name=name,
                     )
                     for name, gravatar_id in avatars
                 ]
-                return ' '.join(avatars)
+                return u' '.join(avatars)
 
             def count_issues(data):
                 counters = defaultdict(int)
@@ -64,14 +64,14 @@ def index():
                 )
 
             events_map = {
-                'ForkEvent': lambda data: 'forked {0} times by: {1}'.format(len(data), avatars(data)),
-                'WatchEvent': lambda data: 'watched {0} times by: {1}'.format(len(data), avatars(data)),
-                'PushEvent': lambda data: '{0} commits by: {1}'.format(
+                'ForkEvent': lambda data: u'forked {0} times by: {1}'.format(len(data), avatars(data)),
+                'WatchEvent': lambda data: u'watched {0} times by: {1}'.format(len(data), avatars(data)),
+                'PushEvent': lambda data: u'{0} commits by: {1}'.format(
                     sum(1 for i in chain(*(item['commits'] for item in data))),
                     avatars(chain(*(item['commits'] for item in data)))
                 ),
-                'GollumEvent': lambda data: 'wiki edited {0} times by: {1}'.format(len(data), avatars(data)),
-                'IssuesEvent': lambda data: 'issues: ' + count_issues(data),
+                'GollumEvent': lambda data: u'wiki edited {0} times by: {1}'.format(len(data), avatars(data)),
+                'IssuesEvent': lambda data: u'issues: ' + count_issues(data),
             }
 
             for rep in daily_digest['repositories']:

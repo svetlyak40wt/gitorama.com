@@ -151,3 +151,7 @@ Processing:    21  409  55.7    399     982
 Waiting:       21  409  55.6    399     982
 Total:         30  409  55.5    400     982
 
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/svetlyak40wt/gitorama.com/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
